@@ -7,6 +7,7 @@ class Game:
         self.id = id
         self.players = {}
         self.roles = {}
+        self.actions = {}
 
     def new_player(self, name: str, id: int):
         self.players[id] = Player(name, id)
