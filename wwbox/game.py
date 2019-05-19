@@ -5,8 +5,8 @@ from wwbox.baserole import BaseRole
 class Game:
     def __init__(self, id=0):
         self.id = id
-        self.players = []
-        self.roles = []
+        self.players = {}
+        self.roles = {}
 
     def new_player(self, name: str, id: int):
         self.players[id] = Player(name, id)

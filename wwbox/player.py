@@ -5,7 +5,7 @@ class Player:
         self.status = 1
         self.can_vote = True
         self.can_speak = True
-        self.effects = []
+        self.effects = {}
         self.roles = []
 
     def add_effect(self, key: str, value):
