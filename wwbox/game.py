@@ -14,8 +14,8 @@ class Game:
     def get_player(self, id):
         return self.players[id]
 
-    def add_role(self, name: str, id: int, gender: str, actions: [], img: str):
-        self.roles[id] = BaseRole(name, id, gender, actions, img)
+    def add_role(self, name: str,  gender: str, actions: [], img: str):
+        self.roles[name] = BaseRole(name, gender, actions, img)
 
     def get_role(self, id):
         return self.roles[id]
