@@ -14,6 +14,9 @@ def import_roles():
         night_actions = role_file['NIGHT_ACTIONS']
         day_actions = role_file['DAY_ACTIONS']
         death_actions = role_file['DEATH_ACTIONS']
+        night_acts = {}
+        for action in night_actions.keys():
+            night_acts.update(name: str, id: int, kind: str, conditions, target: Player
         role_array[role_file['GENERAL']['name']] = BaseRole(role_file['GENERAL']['name'],
                                                             role_file['GENERAL']['gender'], night_actions, day_actions,
                                                             death_actions, role_file['GENERAL']['img'])
