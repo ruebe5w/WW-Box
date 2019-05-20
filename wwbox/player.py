@@ -1,4 +1,5 @@
 class Player:
+    """Represents a Player/a Client"""
     def __init__(self, name: str, id: int):
         self.name = name
         self.id = id
@@ -31,3 +32,9 @@ class Player:
     def del_role(self, role):
         if role in self.roles:
             self.roles.remove(role)
+
+    def set_status(self, status):
+        self.status = status
+
+    def get_status(self):
+        return self.status

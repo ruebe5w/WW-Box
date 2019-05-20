@@ -6,21 +6,23 @@ import os
 logger = logging.getLogger(__name__)
 
 
-def import_roles():
+def import_role_files():
+    """Imports Role-Files"""
     ending = '.txt'
     path = '../roles'
-    role_array = __import_main(path, ending)
+    role_array = __import_files(path, ending)
     return role_array
 
 
-def import_actions():
+def import_action_files():
+    """Imports Action-Files"""
     ending = '.txt'
     path = '../actions'
-    action_array = __import_main(path, ending)
+    action_array = __import_files(path, ending)
     return action_array
 
 
-def __import_main(path, ending):
+def __import_files(path, ending):
     """Imports txt Files from a path and parse them into Arrays"""
     files = []
     values = []

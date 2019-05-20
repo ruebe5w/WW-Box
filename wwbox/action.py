@@ -1,5 +1,12 @@
+from wwbox.player import Player
+
+
 class Action:
-    def __init__(self, name:str, id:int, type:str):
-        self.name=name
-        self.id=id
-        self.type=type
+    """Represents a Action"""
+
+    def __init__(self, name: str, id: int, kind: str, conditions, target: Player):
+        self.name = name
+        self.id = id
+        self.kind = kind
+        self.conditions = conditions  # dict
+        self.target = target
