@@ -1,10 +1,23 @@
-from configparser import ConfigParser
 import logging
-import sys
 import os
+import sys
+from configparser import ConfigParser
+from wwbox.baserole import BaseRole
 
 logger = logging.getLogger(__name__)
 
+
+def import_roles():
+    role_file_array = import_role_files()
+    role_array = {}
+    for role_file in role_file_array:
+        night_actions = role_file['NIGHT_ACTIONS']
+        day_actions = role_file['DAY_ACTIONS']
+        death_actions = role_file['DEATH_ACTIONS']
+        role_array[role_file['GENERAL']['name']] = BaseRole(role_file['GENERAL']['name'],
+                                                            role_file['GENERAL']['gender'], night_actions, day_actions,
+                                                            death_actions, role_file['GENERAL']['img'])
+    return role_array
 
 def import_role_files():
     """Imports Role-Files"""

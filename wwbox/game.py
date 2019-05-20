@@ -1,9 +1,11 @@
 from wwbox.player import Player
 from wwbox.baserole import BaseRole
+from wwbox.importation import import_roles
 
 
 class Game:
     """Represents a Game/a Round"""
+
     def __init__(self, id=0):
         self.id = id
         self.players = {}
@@ -25,3 +27,6 @@ class Game:
     def get_role(self, id):
         """Get Role Object from ID"""
         return self.roles[id]
+
+    def import_roles(self):
+        self.roles.update(import_roles())
