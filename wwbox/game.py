@@ -1,5 +1,5 @@
 from wwbox.player import Player
-from wwbox.baserole import BaseRole
+from wwbox.role import Role
 from wwbox.importation import import_roles
 
 
@@ -22,7 +22,7 @@ class Game:
 
     def add_role(self, name: str, gender: str, night_actions, day_actions, death_actions, img: str):
         """Adds a role Object to Game"""
-        self.roles[name] = BaseRole(name, gender, night_actions, day_actions, death_actions, img)
+        self.roles[name] = Role(name, gender, night_actions, day_actions, death_actions, img)
 
     def get_role(self, id):
         """Get Role Object from ID"""

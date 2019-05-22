@@ -1,12 +1,14 @@
 from configparser import ConfigParser
 
 
-class BaseRole:
+class Role:
     """The Parent Role Object"""
 
-    def __init__(self, name: str, gender: str, night_actions, day_actions, death_actions, img: str, scenario: str):
+    def __init__(self, name: str, gender: str, toa: int, night_actions, day_actions, death_actions, img: str,
+                 scenario: str):
         self.name = name
         self.gender = gender
+        self.toa = toa  # time of awakening
         self.night_actions = night_actions  # dict
         self.day_actions = day_actions  # dict
         self.death_actions = death_actions  # dict
@@ -17,7 +19,8 @@ class BaseRole:
     def write_to_file(self):
         """Writes a Role to a Config-File"""
         file = ConfigParser()
-        file['GENERAL'] = {'name': self.name, 'gender': self.gender, 'img': self.img, 'scenario': self.scenario}
+        file['GENERAL'] = {'name': self.name, 'gender': self.gender, 'toa': self.toa, 'img': self.img,
+                           'scenario': self.scenario}
         night_acts = {}
         day_acts = {}
         death_acts = {}

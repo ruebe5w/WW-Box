@@ -2,7 +2,7 @@ import logging
 import os
 import sys
 from configparser import ConfigParser
-from wwbox.baserole import BaseRole
+from wwbox.role import Role
 from wwbox.action import Action
 
 logger = logging.getLogger(__name__)
@@ -18,7 +18,9 @@ def import_roles():
         death_acts = role_file['DEATH_ACTIONS']
         name = role_file['GENERAL']['name']
         gender = role_file['GENERAL']['gender']
+        toa = role_file['GENERAL']['toa']
         img = role_file['GENERAL']['img']
+        scenario = role_file['GENARAL']['scenario']
         night_actions = {}
         day_actions = {}
         death_actions = {}
@@ -35,7 +37,7 @@ def import_roles():
             if key not in actions:
                 raise Exception('There is no Action named {}.'.format(key))
             death_actions.update({key: actions[key]})
-        role_array[name] = BaseRole(name, gender, night_actions, day_actions, death_actions, img)
+        role_array[name] = Role(name, gender, toa, night_actions, day_actions, death_actions, img, scenario)
     return role_array
 
 
