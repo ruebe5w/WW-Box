@@ -38,4 +38,4 @@ class Game:
         print('Ein neues Spiel wird gestartet!')
         self.status = 1
         print('Rollen werden geladen....')
-        import_roles()
+        self.roles = import_roles()

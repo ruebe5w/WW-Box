@@ -4,8 +4,32 @@ import sys
 from configparser import ConfigParser
 from wwbox.role import Role
 from wwbox.action import Action
+from wwbox.scenario import Scenario
 
 logger = logging.getLogger(__name__)
+
+
+def import_scenario():
+    scenario_file_array = import_scenario_files()
+    scenario_array = {}
+    for scenario_file in scenario_file_array:
+        role_names = scenario_file['ROLES']
+        name = scenario_file['GENERAL']['name']
+        img = scenario_file['GENERAL']['img']
+        author = scenario_file['GENERAL']['author']
+        description = scenario_file['GENERAL']['description']
+        story_audio = scenario_file['GENERAL']['story_audio']
+        role_array = {}
+        day_actions = {}
+        death_actions = {}
+        roles = import_roles()
+        for key in role_names.keys():
+            if key not in roles:
+                raise Exception('There is no Action named {}.'.format(key))
+            role_array.update({key: roles[key]})
+
+        scenario_array[name] = Scenario(name, author, description, story_audio, img)
+    return scenario_array
 
 
 # name: str, id: int, kind: str, conditions, target: Player
@@ -57,9 +81,16 @@ def import_actions():
     return action_array
 
 
+def import_scenario_files():
+    ending = '.ini'
+    path = '../scenarios'
+    scenario_array = __import_files(path, ending)
+    return scenario_array
+
+
 def import_role_files():
     """Imports Role-Files"""
-    ending = '.txt'
+    ending = '.ini'
     path = '../roles'
     role_array = __import_files(path, ending)
     return role_array
@@ -67,7 +98,7 @@ def import_role_files():
 
 def import_action_files():
     """Imports Action-Files"""
-    ending = '.txt'
+    ending = '.ini'
     path = '../actions'
     action_array = __import_files(path, ending)
     return action_array
