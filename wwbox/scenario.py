@@ -24,3 +24,9 @@ class Scenario:
 
         with open(file_name, 'w') as f:
             file.write(f)
+
+    def update_role(self, role):
+        self.roles.update({role.name: role})
+
+    def remove_role(self, role):
+        del self.roles[role.name]
