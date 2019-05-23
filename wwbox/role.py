@@ -13,12 +13,12 @@ class Role:
         self.day_actions = day_actions  # dict
         self.death_actions = death_actions  # dict
         self.scenario = scenario
-
         self.img = img
+        self.write_to_file()
 
     def write_to_file(self):
         """Writes a Role to a Config-File"""
-        file = ConfigParser()
+        file = ConfigParser(allow_no_value=True)
         file['GENERAL'] = {'name': self.name, 'gender': self.gender, 'toa': self.toa, 'img': self.img,
                            'scenario': self.scenario}
         night_acts = {}
@@ -26,14 +26,11 @@ class Role:
         death_acts = {}
 
         for action in self.night_actions:
-            name = self.night_actions[action]['name']
-            night_acts.update({action: name})
+            night_acts.update({action})
         for action in self.day_actions:
-            name = self.day_actions[action]['name']
-            day_acts.update({action: name})
+            day_acts.update({action})
         for action in self.death_actions:
-            name = self.death_actions[action]['name']
-            death_acts.update({action: name})
+            death_acts.update({action})
 
         file['NIGHT_ACTIONS'] = night_acts
         file['DAY_ACTIONS'] = day_acts

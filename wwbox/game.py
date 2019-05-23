@@ -6,8 +6,10 @@ from wwbox.importation import import_roles
 class Game:
     """Represents a Game/a Round"""
 
-    def __init__(self, id=0):
+    def __init__(self, id=0, scenario="default", status=0):
         self.id = id
+        self.scenario = scenario
+        self.status = status
         self.players = {}
         self.roles = {}
         self.actions = {}
@@ -31,3 +33,9 @@ class Game:
 
     def import_roles(self):
         self.roles.update(import_roles())
+
+    def start(self):
+        print('Ein neues Spiel wird gestartet!')
+        self.status = 1
+        print('Rollen werden geladen....')
+        import_roles()
