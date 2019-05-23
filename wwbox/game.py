@@ -1,6 +1,5 @@
+from wwbox.importation import *
 from wwbox.player import Player
-from wwbox.role import Role
-from wwbox.importation import import_roles
 
 
 class Game:
@@ -37,5 +36,6 @@ class Game:
     def start(self):
         print('Ein neues Spiel wird gestartet!')
         self.status = 1
+        import_scenario
         print('Rollen werden geladen....')
         self.roles = import_roles()

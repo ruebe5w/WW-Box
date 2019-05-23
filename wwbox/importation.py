@@ -81,14 +81,14 @@ def import_actions():
     return action_array
 
 
-def import_scenario_files():
+def __import_scenario_files():
     ending = '.ini'
     path = '../scenarios'
     scenario_array = __import_files(path, ending)
     return scenario_array
 
 
-def import_role_files():
+def __import_role_files():
     """Imports Role-Files"""
     ending = '.ini'
     path = '../roles'
@@ -96,7 +96,7 @@ def import_role_files():
     return role_array
 
 
-def import_action_files():
+def __import_action_files():
     """Imports Action-Files"""
     ending = '.ini'
     path = '../actions'
