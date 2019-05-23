@@ -1,5 +1,6 @@
 class Player:
     """Represents a Player/a Client"""
+
     def __init__(self, name: str, id: int):
         self.name = name
         self.id = id
@@ -7,7 +8,7 @@ class Player:
         self.can_vote = True
         self.can_speak = True
         self.effects = {}
-        self.roles = []
+        self.roles = []  # TODO change List to Dict
 
     def add_effect(self, key: str, value):
         self.effects[key] = value

@@ -34,3 +34,11 @@ class Scenario:
     def remove_role(self, role_name):
         del self.roles[role_name]
         del self.role_weighting[role_name]
+
+    def calculate_role_count(self, player_count):
+        counts = {}
+        for role in self.roles.keys():
+            print()
+            # TODO Rollenanzahl berechnen
+            # z.B. {'role_name': 5}
+        return counts

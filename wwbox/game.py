@@ -1,13 +1,14 @@
 from wwbox.importation import *
 from wwbox.player import Player
+import random
 
 
 class Game:
     """Represents a Game/a Round"""
 
-    def __init__(self, id=0, scenario="default", status=0):
+    def __init__(self, id=0, status=0):
         self.id = id
-        self.scenario = scenario
+        self.scenario = Scenario()
         self.status = status
         self.players = {}
         self.roles = {}
@@ -39,3 +40,16 @@ class Game:
         print('Scenario \"' + scenario.name + '\" wird geladen...')
         scenarios = import_scenario()
         self.scenario = scenarios[scenario]
+        self.__role_assignment()
+
+    def __role_assignment(self):
+        player_count = len(self.players)
+        counts = self.scenario.calculate_role_count(player_count)
+        player_id_array = []
+        for player_id in self.players:
+            player_id_array.append(player_id)
+        random.shuffle(player_id_array)
+        i = 0
+        for key in counts.keys():
+            self.roles.update({key: self.scenario.roles[key]})
+            self.players[player_id_array[i]].set_primary_role(self.roles[key])
