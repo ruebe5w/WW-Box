@@ -33,9 +33,9 @@ class Game:
     def import_roles(self):
         self.roles.update(import_roles())
 
-    def start(self):
+    def start(self, scenario):
         print('Ein neues Spiel wird gestartet!')
         self.status = 1
-        import_scenario
-        print('Rollen werden geladen....')
-        self.roles = import_roles()
+        print('Scenario \"' + scenario.name + '\" wird geladen...')
+        scenarios = import_scenario()
+        self.scenario = scenarios[scenario]

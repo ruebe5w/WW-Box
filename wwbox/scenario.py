@@ -9,6 +9,7 @@ class Scenario:
         self.roles = {}
         self.story_audio = story_audio
         self.img = img
+        self.role_weighting = {}
 
     def write_to_file(self):
         """Saves Scenario to config"""
@@ -26,8 +27,10 @@ class Scenario:
         with open(file_name, 'w') as f:
             file.write(f)
 
-    def update_role(self, role):
+    def update_role(self, role, weighting):
         self.roles.update({role.name: role})
+        self.role_weighting.update({role.name: weighting})
 
-    def remove_role(self, role):
-        del self.roles[role.name]
+    def remove_role(self, role_name):
+        del self.roles[role_name]
+        del self.role_weighting[role_name]

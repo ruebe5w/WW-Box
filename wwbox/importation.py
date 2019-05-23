@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def import_scenario():
-    scenario_file_array = import_scenario_files()
+    scenario_file_array = __import_scenario_files()
     scenario_array = {}
     for scenario_file in scenario_file_array:
         role_names = scenario_file['ROLES']
@@ -25,7 +25,7 @@ def import_scenario():
         roles = import_roles()
         for key in role_names.keys():
             if key not in roles:
-                raise Exception('There is no Action named {}.'.format(key))
+                raise Exception('There is no Role named {}.'.format(key))
             role_array.update({key: roles[key]})
 
         scenario_array[name] = Scenario(name, author, description, story_audio, img)
@@ -34,7 +34,7 @@ def import_scenario():
 
 # name: str, id: int, kind: str, conditions, target: Player
 def import_roles():
-    role_file_array = import_role_files()
+    role_file_array = __import_role_files()
     role_array = {}
     for role_file in role_file_array:
         night_acts = role_file['NIGHT_ACTIONS']
@@ -66,7 +66,7 @@ def import_roles():
 
 
 def import_actions():
-    action_file_array = import_action_files()
+    action_file_array = __import_action_files()
     action_array = {}
     for action_file in action_file_array:
         name = action_file['GENERAL']['name']
