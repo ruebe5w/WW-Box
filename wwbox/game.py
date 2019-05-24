@@ -14,6 +14,7 @@ class Game:
         self.roles = {}
         self.actions = {}
 
+
     def new_player(self, name: str, id: int):
         """Adds a new player Object to Game"""
         self.players[id] = Player(name, id)
@@ -34,13 +35,14 @@ class Game:
     def import_roles(self):
         self.roles.update(import_roles())
 
-    def start(self, scenario):
+    def start(self, scenario_name):
         print('Ein neues Spiel wird gestartet!')
         self.status = 1
-        print('Scenario \"' + scenario.name + '\" wird geladen...')
+        print('Scenario \"' + scenario_name + '\" wird geladen...')
         scenarios = import_scenario()
-        self.scenario = scenarios[scenario]
+        self.scenario = scenarios[scenario_name]
         self.__role_assignment()
+        self.play_audio(self.scenario.story_audio)
 
     def __role_assignment(self):
         player_count = len(self.players)
@@ -52,4 +54,15 @@ class Game:
         i = 0
         for key in counts.keys():
             self.roles.update({key: self.scenario.roles[key]})
-            self.players[player_id_array[i]].set_primary_role(self.roles[key])
+            player = self.players[player_id_array[i]]
+            player.set_primary_role(self.roles[key])
+            role_gedöns = ""  # TODO Send Players Role
+            self.send_gui(player, role_gedöns)  # TODO
+
+    def send_gui(self, player, gui_commands):
+        print()
+        # TODO send information to players
+
+    def play_audio(self, audio_file):
+        print()
+        # TODO play_audio
