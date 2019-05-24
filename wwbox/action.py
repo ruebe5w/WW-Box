@@ -5,16 +5,17 @@ from configparser import ConfigParser
 class Action:
     """Represents a Action"""
 
-    def __init__(self, name: str, id: int, conditions, method):
+    def __init__(self, name: str, id: int, conditions, method, audio=""):
         self.name = name
         self.id = id
         self.conditions = conditions  # dict
         self.method = method
+        self.audio = audio
 
     def write_to_file(self):
         """Writes a Action to a Config-File"""
         file = ConfigParser()
-        file['GENERAL'] = {'name': self.name, 'id': self.id}
+        file['GENERAL'] = {'name': self.name, 'id': self.id, 'audio': self.audio}
         condition_arr = {}
 
         # for key in self.conditions.keys():
