@@ -43,4 +43,5 @@ class Role:
             file.write(f)
 
     def wake_up(self):
-# TODO role wake_up
+        print()
+        # TODO role wake_up
