@@ -2,12 +2,12 @@ from configparser import ConfigParser
 
 
 class Scenario:
-    def __init__(self, name: str, author: str, description: str, story_audio: str, img: str):
+    def __init__(self, name: str, author: str, description: str, audios, img: str):
         self.name = name
         self.author = author
         self.description = description
         self.roles = {}  # Implementierte Rollen im Szenario
-        self.story_audio = story_audio
+        self.audios = audios  # Szenario spezifische Audios
         self.img = img
         self.role_weighting = {}
 

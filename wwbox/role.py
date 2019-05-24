@@ -41,3 +41,6 @@ class Role:
 
         with open(file_name, 'w') as f:
             file.write(f)
+
+    def wake_up(self):
+# TODO role wake_up

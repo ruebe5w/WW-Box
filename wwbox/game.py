@@ -45,36 +45,43 @@ class Game:
         self.scenario = scenarios[scenario_name]
         self.__role_assignment()
         self.generate_order()
-        play_audio(self.scenario.story_audio)  # TODO Threading
+        play_audio(self.scenario.story_audio)
         self.game_routine()
 
     def game_routine(self):
 
-        def night():  # TODO
+        def night():
             nonlocal first_night
             if first_night:
                 print()
-                # 1R
+                _night_wakeup('1R')
                 first_night = False
-            # PR
-            # KR
-            # AR
+            _night_wakeup('PR')
+            _night_wakeup('KR')
+            _night_wakeup('AR')
+
+        def _night_wakeup(cat):
+            for role in self.order[cat]:
+                role.wake_up()
+                for player in self.players:
+                    if role in player.roles:
+                        send_gui(player, "")  # TODO
 
         def day():
             print()
             # TODO
-            # Dorf erwacht
+            play_audio(self.scenario.audios['town_awake'])
 
             # Tode setzen & verkünden
             # Diskussion
             # Abstimmung
             # Tode setzen & verkünden
 
-            # Dorf schläft ein
+            play_audio(self.scenario.audios['town_sleep'])
 
         first_night = True
         # 0R (Bürgermeister)
-        # Dorf schläft ein
+        play_audio(self.scenario.audios['town_sleep'])
         night()
         while not self.__is_won():
             day()
@@ -105,5 +112,5 @@ class Game:
     def generate_order(self):
         """Generates the order of toa"""
         # TODO generate_order with role.toa
-        order = {}
+        order = {'0R': {}, '1R': {}, 'PR': {}, 'KR': {}, 'AR': {}}
         self.order = order
