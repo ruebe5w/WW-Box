@@ -1,7 +1,9 @@
+from playsound import playsound
+
+
 def play_audio(audio_file):  # TODO static?
     """Plays an audio file"""
-    print()
-    # TODO play_audio
+    playsound(audio_file)
 
 
 def send_gui(player, gui_commands):  # TODO static?

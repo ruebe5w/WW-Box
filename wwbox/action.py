@@ -1,4 +1,3 @@
-from wwbox.player import Player
 from configparser import ConfigParser
 
 
