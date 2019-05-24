@@ -13,7 +13,7 @@ class Game:
         self.players = {}
         self.roles = {}
         self.actions = {}
-
+        self.order = {}
 
     def new_player(self, name: str, id: int):
         """Adds a new player Object to Game"""
@@ -42,7 +42,9 @@ class Game:
         scenarios = import_scenario()
         self.scenario = scenarios[scenario_name]
         self.__role_assignment()
-        self.play_audio(self.scenario.story_audio)
+        self.play_audio(self.scenario.story_audio)  # TODO Threading
+        self.generate_order()
+
 
     def __role_assignment(self):
         player_count = len(self.players)
@@ -59,10 +61,19 @@ class Game:
             role_gedöns = ""  # TODO Send Players Role
             self.send_gui(player, role_gedöns)  # TODO
 
-    def send_gui(self, player, gui_commands):
+    def send_gui(self, player, gui_commands):  # TODO static?
+        """Updates Player's GUI"""
         print()
         # TODO send information to players
+        # if not death:
 
-    def play_audio(self, audio_file):
+    def play_audio(self, audio_file):  # TODO static?
+        """Plays an audio file"""
         print()
         # TODO play_audio
+
+    def generate_order(self):
+        """Generates the order of toa"""
+        # TODO generate_order with role.toa
+        order = {}
+        self.order = order

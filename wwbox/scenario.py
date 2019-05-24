@@ -6,7 +6,7 @@ class Scenario:
         self.name = name
         self.author = author
         self.description = description
-        self.roles = {}
+        self.roles = {}  # Implementierte Rollen im Szenario
         self.story_audio = story_audio
         self.img = img
         self.role_weighting = {}
