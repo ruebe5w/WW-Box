@@ -24,10 +24,10 @@ class Game:
         """Get Player Object from ID"""
         return self.players[id]
 
-    def add_role(self, name: str, gender: str, toa: int, night_actions, day_actions, death_actions, img: str,
+    def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, death_actions, img: str,
                  scenario: str):
         """Adds a role Object to Game"""
-        self.roles[name] = Role(name, gender, toa, night_actions, day_actions, death_actions, img, scenario)
+        self.roles[name] = Role(name, gender, toa, team, night_actions, day_actions, death_actions, img, scenario)
 
     def get_role(self, id):
         """Get Role Object from ID"""
