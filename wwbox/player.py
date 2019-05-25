@@ -4,11 +4,11 @@ class Player:
     def __init__(self, name: str, id: int):
         self.name = name
         self.id = id
-        self.status = 1
+        self.status = 2  # 2=alive, 1=attacked, 0=death
         self.can_vote = True
         self.can_speak = True
         self.effects = {}
-        self.roles = []  # TODO change List to Dict
+        self.roles = []  # Array, just role names
 
     def add_effect(self, key: str, value):
         self.effects[key] = value
@@ -34,8 +34,3 @@ class Player:
         if role in self.roles:
             self.roles.remove(role)
 
-    def set_status(self, status):
-        self.status = status
-
-    def get_status(self):
-        return self.status

@@ -2,6 +2,7 @@ from wwbox.importation import *
 from wwbox.player import Player
 import random
 from wwbox.tools import *
+from wwbox.scenario import Scenario
 
 
 class Game:
@@ -9,7 +10,7 @@ class Game:
 
     def __init__(self, id=0, status=0):
         self.id = id
-        self.scenario = Scenario
+        # declare self.scenario
         self.status = status
         self.players = {}
         self.roles = {}
@@ -25,10 +26,12 @@ class Game:
         return self.players[id]
 
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
+                 death_actions,
                  img: str,
                  scenario: str):
         """Adds a role Object to Game"""
-        self.roles[name] = Role(name, gender, toa, team, night_actions, day_actions, on_attack_actions, img, scenario)
+        self.roles[name] = Role(name, gender, toa, team, night_actions, day_actions, on_attack_actions, death_actions,
+                                img, scenario)
 
     def get_role(self, id):
         """Get Role Object from ID"""
@@ -46,7 +49,7 @@ class Game:
         self.scenario = scenarios[scenario_name]
         self.__role_assignment()
         self.generate_order()
-        play_audio(self.scenario.story_audio)
+        play_audio(self.scenario.audios['story_audio'])
         self.game_routine()
 
     def game_routine(self):
@@ -73,12 +76,38 @@ class Game:
             # TODO
             play_audio(self.scenario.audios['town_awake'])
 
-            # Tode setzen & verkünden
+            set_announce_deaths()
             # Diskussion
-            # Abstimmung
-            # Tode setzen & verkünden
+            send_gui(all, 'Abstimmungsdfdsdk')
+            play_audio(self.scenario.audios['discuss_start'])
+            # wait
+            play_audio(self.scenario.audios['discuss_half_time'])
+            # wait
+            play_audio(self.scenario.audios['discuss_end'])
+
+            # Abstimmung auswerten
+            # player.status=1
+            set_announce_deaths()
 
             play_audio(self.scenario.audios['town_sleep'])
+
+        def set_announce_deaths():  # TODO Überarbeiten
+            for player in self.players:
+                if player.status == 1:
+                    for role_name in player.roles:
+                        for action_name in self.roles[role_name].on_attack_actions:
+                            self.actions[action_name].run(player)
+                    if player.status == 1:
+                        play_audio(self.scenario.audios['player_death'])
+                        for role_name in player.roles:
+                            for action_name in self.roles[role_name].death_actions:
+                                self.actions[action_name].run(player)
+                        player.status = 0
+                        player.can_speak = False
+                        player.can_vote = False
+
+                    else:
+                        player.status = 2
 
         first_night = True
         # 0R (Bürgermeister)
@@ -87,6 +116,8 @@ class Game:
         while not self.__is_won():
             day()
             night()
+        set_announce_deaths()
+
         # Gewinner verkünden
         # Neustarten
 

@@ -36,20 +36,21 @@ def import_roles():
         night_acts = role_file['NIGHT_ACTIONS']
         day_acts = role_file['DAY_ACTIONS']
         on_attack_acts = role_file['ON_ATTACK_ACTIONS']
+        death_acts = role_file['DEATH_ACTIONS']
         name = role_file['GENERAL']['name']
         gender = role_file['GENERAL']['gender']
         toa = role_file['GENERAL']['toa']
         img = role_file['GENERAL']['img']
         team = role_file['GENERAL']['team']
         scenario = role_file['GENARAL']['scenario']
-        night_actions = {}
-        day_actions = {}
-        on_attack_actions = {}
+
         actions = import_actions()
         night_actions = import_dict(night_acts, actions, 'Action')
         day_actions = import_dict(day_acts, actions, 'Action')
         on_attack_actions = import_dict(on_attack_acts, actions, 'Action')
-        role_array[name] = Role(name, gender, toa, team, night_actions, day_actions, on_attack_actions, img, scenario)
+        death_actions = import_dict(death_acts, actions, 'Action')
+        role_array[name] = Role(name, gender, toa, team, night_actions, day_actions, on_attack_actions, death_actions,
+                                img, scenario)
     return role_array
 
 
