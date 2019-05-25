@@ -4,7 +4,8 @@ from configparser import ConfigParser
 class Role:
     """The Parent Role Object"""
 
-    def __init__(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, death_actions, img: str,
+    def __init__(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
+                 img: str,
                  scenario: str):
         self.name = name
         self.gender = gender
@@ -12,7 +13,7 @@ class Role:
         self.team = team
         self.night_actions = night_actions  # dict
         self.day_actions = day_actions  # dict
-        self.death_actions = death_actions  # dict
+        self.on_attack_actions = on_attack_actions  # dict
         self.scenario = scenario
         self.img = img
         self.write_to_file()
@@ -25,18 +26,18 @@ class Role:
                            'scenario': self.scenario}
         night_acts = {}
         day_acts = {}
-        death_acts = {}
+        on_attack_acts = {}
 
         for action in self.night_actions:
             night_acts.update({action})
         for action in self.day_actions:
             day_acts.update({action})
-        for action in self.death_actions:
-            death_acts.update({action})
+        for action in self.on_attack_actions:
+            on_attack_acts.update({action})
 
         file['NIGHT_ACTIONS'] = night_acts
         file['DAY_ACTIONS'] = day_acts
-        file['DEATH_ACTIONS'] = death_acts
+        file['ON_ATTACK_ACTIONS'] = on_attack_acts
 
         file_name = self.name + '.ini'
         print('Write to \"' + file_name + '\"')
