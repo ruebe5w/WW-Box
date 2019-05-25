@@ -18,17 +18,13 @@ def import_scenario():
         img = scenario_file['GENERAL']['img']
         author = scenario_file['GENERAL']['author']
         description = scenario_file['GENERAL']['description']
-        story_audio = scenario_file['GENERAL']['story_audio']
-        role_array = {}
-        day_actions = {}
-        death_actions = {}
-        roles = import_roles()
-        for key in role_names.keys():
-            if key not in roles:
-                raise Exception('There is no Role named {}.'.format(key))
-            role_array.update({key: roles[key]})
+        discussion_time = scenario_file['GENERAL']['discussio_time']
+        audios = scenario_file['AUDIOS']
 
-        scenario_array[name] = Scenario(name, author, description, story_audio, img)
+        roles = import_roles()
+        role_array = import_dict(role_names, roles, 'Role')
+
+        scenario_array[name] = Scenario(name, author, description, audios, img, role_array, discussion_time)
     return scenario_array
 
 
@@ -50,20 +46,20 @@ def import_roles():
         day_actions = {}
         death_actions = {}
         actions = import_actions()
-        for key in night_acts.keys():
-            if key not in actions:
-                raise Exception('There is no Action named {}.'.format(key))
-            night_actions.update({key: actions[key]})
-        for key in day_acts.keys():
-            if key not in actions:
-                raise Exception('There is no Action named {}.'.format(key))
-            day_actions.update({key: actions[key]})
-        for key in death_acts.keys():
-            if key not in actions:
-                raise Exception('There is no Action named {}.'.format(key))
-            death_actions.update({key: actions[key]})
+        night_actions = import_dict(night_acts, actions, 'Action')
+        day_actions = import_dict(day_acts, actions, 'Action')
+        death_actions = import_dict(death_acts, actions, 'Action')
         role_array[name] = Role(name, gender, toa, team, night_actions, day_actions, death_actions, img, scenario)
     return role_array
+
+
+def import_dict(previous_dict, value_dict, key_cat: str):
+    return_dict = {}
+    for key in previous_dict.keys():
+        if key not in value_dict:
+            raise Exception('There is no ' + key_cat + ' named {}.'.format(key))
+        return_dict.update({key: value_dict[key]})
+    return return_dict
 
 
 def import_actions():
