@@ -9,7 +9,7 @@ class Game:
 
     def __init__(self, id=0, status=0):
         self.id = id
-        self.scenario = Scenario()  # TODO
+        self.scenario = Scenario
         self.status = status
         self.players = {}
         self.roles = {}
@@ -91,6 +91,7 @@ class Game:
 
     def __is_won(self):
         # TODO
+
         bol = False
         return bol
 
