@@ -111,6 +111,18 @@ class Game:
 
     def generate_order(self):
         """Generates the order of toa"""
-        # TODO generate_order with role.toa
+
         order = {'0R': {}, '1R': {}, 'PR': {}, 'KR': {}, 'AR': {}}
+        role_counts = self.scenario.calculate_role_count(len(self.players))
+
+        def if_role_in_cat(role, role_cat):
+            if role.toa == role_cat:
+                order[role_cat].update({role.name: role_counts[role.name]})
+
+        for role in self.roles:
+            if_role_in_cat(role, '0R')
+            if_role_in_cat(role, '1R')
+            if_role_in_cat(role, 'PR')
+            if_role_in_cat(role, 'KR')
+            if_role_in_cat(role, 'AR')
         self.order = order
