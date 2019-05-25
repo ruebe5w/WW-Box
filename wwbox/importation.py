@@ -44,6 +44,7 @@ def import_roles():
         gender = role_file['GENERAL']['gender']
         toa = role_file['GENERAL']['toa']
         img = role_file['GENERAL']['img']
+        team = role_file['GENERAL']['team']
         scenario = role_file['GENARAL']['scenario']
         night_actions = {}
         day_actions = {}
@@ -61,7 +62,7 @@ def import_roles():
             if key not in actions:
                 raise Exception('There is no Action named {}.'.format(key))
             death_actions.update({key: actions[key]})
-        role_array[name] = Role(name, gender, toa, night_actions, day_actions, death_actions, img, scenario)
+        role_array[name] = Role(name, gender, toa, team, night_actions, day_actions, death_actions, img, scenario)
     return role_array
 
 
