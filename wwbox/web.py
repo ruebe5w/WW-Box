@@ -265,17 +265,19 @@ class WebApp(App):
         self.tutorial_ui = self.hboxMain
         return self.tutorial_ui
 
-    def on_start_pressed(self):
+    def on_start_pressed(self, emitter):
         print('Start!')  # TODO
 
-    def on_login_pressed(self):
+    def on_login_pressed(self, emitter):
         print('LOGIN')  # TODO
 
         instance_dict.update({self.client_address: {
             'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visiblility': 'hidden'},
-                   'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'}}}})
+                   'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'},
+                   'txt2': {'text': 'Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf '}}}})
+        print(instance_dict)
 
-    def on_config_pressed(self):
+    def on_config_pressed(self, emitter):
         print('CONFIG')  # TODO
 
     def lvPoll_on_selected(self, widget, selected_item_key):
@@ -294,9 +296,8 @@ class WebApp(App):
 
 
 class WebThread(Thread):
-    def __init__(self, App):
+    def __init__(self):
         Thread.__init__(self)
-        self.app = App
 
     def run(self):
         # Configuration
@@ -309,7 +310,3 @@ class WebThread(Thread):
                    multiple_instance=configuration['config_multiple_instance'],
                    enable_file_cache=configuration['config_enable_file_cache'],
                    start_browser=configuration['config_start_browser'])
-
-
-t = WebThread(WebApp)
-t.start()
