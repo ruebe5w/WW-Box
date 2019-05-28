@@ -1,3 +1,3 @@
-from pip._internal import main as pip
+# from pip._internal import main as pip
 
-pip(['install', '-r' '../requirements.txt'])
+# pip(['install', '-r' '../requirements.txt'])

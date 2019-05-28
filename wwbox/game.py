@@ -128,6 +128,7 @@ class Game:
         return bol
 
     def __role_assignment(self):
+        print('Rollen werden zugeteilt...')
         player_count = len(self.players)
         counts = self.scenario.calculate_role_count(player_count)
         player_id_array = []
