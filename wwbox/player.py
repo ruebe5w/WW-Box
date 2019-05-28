@@ -1,7 +1,7 @@
 class Player:
     """Represents a Player/a Client"""
 
-    def __init__(self, name: str, id: int):
+    def __init__(self, name: str, id: str):
         self.name = name
         self.id = id
         self.status = 2  # 2=alive, 1=attacked, 0=death
