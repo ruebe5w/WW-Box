@@ -125,6 +125,7 @@ class WebApp(App):
         self.ddScenario.style.update(
             {"margin": "0px", "width": "188.0px", "height": "65.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
+        self.ddScenario.onchange.do(self.ddScenario_on_change)
 
         self.btStart = Button('Spiel starten')
         self.btStart.attributes.update(
@@ -284,13 +285,17 @@ class WebApp(App):
         print('Start!')  # TODO
         gamestatus_dict['status'] = 1
 
+    def ddScenario_on_change(self, widget, value):
+        gamestatus_dict['scenario'] = value
+
     def on_login_pressed(self, emitter):
         print('LOGIN')  # TODO
 
-        instance_dict.update({self.ip: {
-            'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
-                   'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'},
-                   'txt2': {'text': 'Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf '}}}})
+        instance_dict.update({self.ip: {'name': self.txtName.get_text(),
+                                        'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
+                                               'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'},
+                                               'txt2': {
+                                                   'text': 'Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf '}}}})
         print(instance_dict)
 
     def on_config_pressed(self, emitter):
