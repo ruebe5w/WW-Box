@@ -19,7 +19,7 @@ class WebApp(App):
                 self.lblText.style.update({'visibility': ui['txt1']['visibilyty']})
                 self.lblText.set_text(ui['txt1']['text'])
                 self.ddScenario.style.update({'visibility: visible'})
-                self.ddScenario.set  # TODO
+                self.ddScenario.new_from_list(ui['ddScenario']['list'])
                 self.btStart.style.update({'visibility: visible'})
                 self.set_root_widget(self.login_ui)
             if ui['base'] == 'end':
@@ -42,6 +42,7 @@ class WebApp(App):
             if ui['base'] == 'tutorial':
                 self.lblText.set_text(ui['txt1']['text'])
                 self.lvTutorial.new_from_list(ui['lvTutorial']['list'])
+                self.ddScenario.new_from_list(ui['ddScenario']['list'])
                 self.set_root_widget(self.tutorial_ui)
 
     def main(self):
