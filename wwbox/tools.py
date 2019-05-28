@@ -1,5 +1,7 @@
 from playsound import playsound
-from wwbox.web import instance_dict
+
+gamestatus_dict = {'status': 0, 'scenario': 'Flohs Kuenstler-WG'}
+instance_dict = {}
 
 
 def play_audio(audio_file):

@@ -1,11 +1,10 @@
-from wwbox.game import Game
-from wwbox.web import WebThread
-from wwbox.web import instance_dict
+from wwbox.game import *
+from wwbox.web import WebThread, instance_dict
 
 web_thread = WebThread()
 web_thread.start()
 old_instance_dict = {}
-gamestatus_dict = {'status': 0, 'scenario': 'Flohs Kuenstler-WG'}
+
 game = Game()
 while gamestatus_dict['status'] == 0:
     if old_instance_dict != instance_dict:

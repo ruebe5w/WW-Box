@@ -2,9 +2,8 @@ from remi.gui import *
 from remi import start as remi_start
 from remi import App
 from threading import Thread
-from wwbox.test import gamestatus_dict
-
-instance_dict = {}
+from wwbox.tools import *
+from wwbox.importation import import_scenario
 
 
 class WebApp(App):
@@ -25,7 +24,7 @@ class WebApp(App):
 
                 self.ddScenario.new_from_list(ui['ddScenario']['list'])
 
-                self.update_root(self.login_ui)
+                self.update_root(self.config_ui)
             if ui['base'] == 'end':
                 self.lblText.set_text(ui['txt1']['text'])
                 self.listRoles.new_from_list(ui['listRoles']['list'])
@@ -36,6 +35,7 @@ class WebApp(App):
                 self.imgPicture.set_image('../Rückseite.png')
                 self.update_root(self.info_ui)
             if ui['base'] == 'login':
+                self.txtName.style.update({'visibility': ui['txtName']['visibility']})
                 self.btLogin.style.update({'visibility': ui['btLogin']['visibility']})
                 self.lblText.set_text(ui['txt1']['text'])
                 self.lblText2.set_text(ui['txt2']['text'])
@@ -72,7 +72,7 @@ class WebApp(App):
             {"class": "HBox", "editor_constructor": "()", "editor_varname": "hboxMain", "editor_tag_type": "widget",
              "editor_newclass": "False", "editor_baseclass": "HBox"})
         self.hboxMain.style.update(
-            {"margin": "0px", "width": "1019px", "height": "844px", "top": "9px", "left": "12px",
+            {"margin": "0px", "width": "100%", "height": "100%", "top": "9px", "left": "12px",
              "position": "absolute",
              "display": "flex", "justify-content": "space-around", "align-items": "center", "flex-direction": "row",
              "overflow": "auto"})
@@ -116,6 +116,7 @@ class WebApp(App):
              "overflow": "auto", "order": "-1"})
 
         self.txtName = TextInput(single_line=True, hint='Name')
+        self.txtName.onchange.do(self.txtName_on_change)
 
         self.ddScenario = DropDown()
         self.ddScenario.attributes.update(
@@ -144,6 +145,7 @@ class WebApp(App):
         self.btLogin.style.update(
             {"margin": "0px", "width": "123.0px", "height": "38.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
+        self.btLogin.set_enabled(enabled=False)
         self.btLogin.onclick.do(self.on_login_pressed)
 
         self.btConf = Button('Konfigurieren')
@@ -163,7 +165,7 @@ class WebApp(App):
              "editor_baseclass": "Label"})
         self.lblMadeBy.style.update(
             {"margin": "0px", "width": "236.0px", "height": "264.0px", "top": "20px", "position": "static",
-             "overflow": "auto", "order": "-1", "box-shadow": "0 0 10px rgb(33,150,243)"})
+             "overflow": "auto", "order": "-1"})
 
         self.imgPicture = Image('bild.png')
         self.imgPicture.attributes.update(
@@ -282,7 +284,7 @@ class WebApp(App):
         return self.tutorial_ui
 
     def on_start_pressed(self, emitter):
-        print('Start!')  # TODO
+        print('Start!')
         gamestatus_dict['status'] = 1
 
     def ddScenario_on_change(self, widget, value):
@@ -293,13 +295,31 @@ class WebApp(App):
 
         instance_dict.update({self.ip: {'name': self.txtName.get_text(),
                                         'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
+                                               'txtName': {'visibility': 'hidden'},
                                                'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'},
                                                'txt2': {
                                                    'text': 'Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf '}}}})
-        print(instance_dict)
+        # print(instance_dict)
+
+    def txtName_on_change(self, widget, value):
+        print(value)
+        if value != '':
+            self.btLogin.set_enabled(enabled=True)
+        else:
+            self.btLogin.set_enabled(enabled=False)
 
     def on_config_pressed(self, emitter):
-        print('CONFIG')  # TODO
+        print('CONFIG')
+        self.on_login_pressed(emitter)
+        scenarios = import_scenario()
+        list = []
+        for scenario in scenarios.keys():
+            list.append(scenario)
+        instance_dict[self.ip].update({'ui': {'base': 'config',
+
+                                              'txt1': {'text': 'Wähle ein Szenario aus: '},
+                                              'ddScenario': {'list': list}
+                                              }})
 
     def lvPoll_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
