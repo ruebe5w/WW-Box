@@ -139,10 +139,13 @@ class Game:
             self.roles.update({key: self.scenario.roles[key]})
             player = self.players[player_id_array[i]]
             player.set_primary_role(self.roles[key])
-            role_gedons = ""  # TODO Send Players Role
-            send_gui(player, role_gedons)  # TODO
+            text = "Herzlich Willkommen in " + self.scenario.name + '! Du bist in diesem Spiel\n' + player.roles[1].name
+            img = player.roles[1].name + '.png'
+            set_gui(player.id, base='info', txt1=text, imgPicture=img)
+            i += 1
 
     def generate_order(self):
+
         """Generates the order of toa"""
 
         order = {'0R': {}, '1R': {}, 'PR': {}, 'KR': {}, 'AR': {}}
