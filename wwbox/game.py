@@ -47,7 +47,7 @@ class Game:
         print('Scenario \"' + scenario_name + '\" wird geladen...')
         scenarios = import_scenario()
         self.scenario = scenarios[scenario_name]
-        self.__role_assignment()
+        self._role_assignment()
         self.generate_order()
         play_audio(self.scenario.audios['story_audio'])
         self.game_routine()
@@ -121,13 +121,13 @@ class Game:
         # Gewinner verkünden
         # Neustarten
 
-    def __is_won(self):
+    def _is_won(self):
         # TODO
 
         bol = False
         return bol
 
-    def __role_assignment(self):
+    def _role_assignment(self):
         print('Rollen werden zugeteilt...')
         player_count = len(self.players)
         counts = self.scenario.calculate_role_count(player_count)
@@ -136,6 +136,7 @@ class Game:
             player_id_array.append(player_id)
         random.shuffle(player_id_array)
         i = 0
+        print(counts)
         for key in counts.keys():
             self.roles.update({key: self.scenario.roles[key]})
             player = self.players[player_id_array[i]]
@@ -143,6 +144,7 @@ class Game:
             text = "Herzlich Willkommen in " + self.scenario.name + '! Du bist in diesem Spiel\n' + player.roles[1].name
             img = player.roles[1].name + '.png'
             set_gui(player.id, base='info', txt1=text, imgPicture=img)
+            print(instance_dict)
             i += 1
 
     def generate_order(self):

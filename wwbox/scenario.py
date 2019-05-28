@@ -23,11 +23,11 @@ class Scenario:
         file['ROLES'] = role_name_array
 
         audio_name_array = {}
-        for audio in self.audios:
-            audio_name_array.update({audio})
+        for audio in self.audios.keys():
+            audio_name_array.update({audio: self.audios[audio]})
         file['AUDIOS'] = audio_name_array
 
-        file_name = self.name + '.ini'
+        file_name = '../scenarios/' + self.name + '.ini'
         print('Write to \"' + file_name + '\"')
 
         with open(file_name, 'w') as f:
@@ -42,7 +42,7 @@ class Scenario:
         del self.role_weighting[role_name]
 
     def calculate_role_count(self, player_count):
-        counts = {}
+        counts = {'werwolf': 1}
         for role in self.roles.keys():
             print()
             # TODO Rollenanzahl berechnen

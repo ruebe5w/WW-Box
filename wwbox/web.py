@@ -21,8 +21,7 @@ class WebApp(App):
             ui = instance_dict[self.ip]['ui']
             if ui['base'] == 'config':
                 self.lblText.set_text(ui['txt1']['text'])
-
-                self.ddScenario.new_from_list(ui['ddScenario']['list'])
+                self.ddScenario.append(tuple(ui['ddScenario']['list']))
 
                 self.update_root(self.config_ui)
             if ui['base'] == 'end':
@@ -285,10 +284,11 @@ class WebApp(App):
 
     def on_start_pressed(self, emitter):
         print('Start!')
+        gamestatus_dict['scenario'] = self.ddScenario.get_value()
         gamestatus_dict['status'] = 1
 
     def ddScenario_on_change(self, widget, value):
-        gamestatus_dict['scenario'] = value
+        print()
 
     def on_login_pressed(self, emitter):
         print('LOGIN')  # TODO
@@ -312,13 +312,14 @@ class WebApp(App):
         print('CONFIG')
         self.on_login_pressed(emitter)
         scenarios = import_scenario()
-        list = []
+        scen_list = []
         for scenario in scenarios.keys():
-            list.append(scenario)
+            scen_list.append(scenario)
+        print(scen_list)
         instance_dict[self.ip].update({'ui': {'base': 'config',
 
                                               'txt1': {'text': 'Wähle ein Szenario aus: '},
-                                              'ddScenario': {'list': list}
+                                              'ddScenario': {'list': scen_list}
                                               }})
 
     def lvPoll_on_selected(self, widget, selected_item_key):
@@ -344,7 +345,7 @@ class WebThread(Thread):
         # Configuration
         configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 8081,
                          'config_multiple_instance': True, 'config_enable_file_cache': False,
-                         'config_start_browser': True, 'config_resourcepath': './res/'}
+                         'config_start_browser': False, 'config_resourcepath': './res/'}
 
         # start(MyApp,address='127.0.0.1', port=8081, multiple_instance=False,enable_file_cache=True, update_interval=0.1, start_browser=True)
         remi_start(WebApp, address=configuration['config_address'], port=configuration['config_port'],

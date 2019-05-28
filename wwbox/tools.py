@@ -1,6 +1,6 @@
 from playsound import playsound
 
-gamestatus_dict = {'status': 0, 'scenario': 'Flos Kuenstler-WG'}
+gamestatus_dict = {'status': 0, 'scenario': 'default'}
 instance_dict = {}
 
 

@@ -18,7 +18,7 @@ def import_scenario():
         img = scenario_file['GENERAL']['img']
         author = scenario_file['GENERAL']['author']
         description = scenario_file['GENERAL']['description']
-        discussion_time = scenario_file['GENERAL']['discussio_time']
+        discussion_time = scenario_file['GENERAL']['discussion_time']
         audios = scenario_file['AUDIOS']
 
         roles = import_roles()
@@ -113,7 +113,8 @@ def __import_files(path, ending):
                 files.append(os.path.join(r, file))
     i = 0
     for file in files:
-        values[i] = ConfigParser()
+
+        values.append(ConfigParser())
         try:
             with open(file) as f:
                 values[i].read_file(f)
