@@ -2,6 +2,7 @@ from remi.gui import *
 from remi import start as remi_start
 from remi import App
 from threading import Thread
+from wwbox.test import gamestatus_dict
 
 instance_dict = {}
 
@@ -10,40 +11,50 @@ class WebApp(App):
     def __init__(self, *args, **kwargs):
         if not 'editing_mode' in kwargs.keys():
             super(WebApp, self).__init__(*args, static_file_path={'my_res': './res/'})
+        self.old_instance_dict = instance_dict
+        self.ip = self.client_address[0]
 
     def idle(self):
         """idle function called every update cycle"""
-        if self.client_address in instance_dict:
-            ui = instance_dict[self.client_address]['ui']
+        # print(instance_dict)
+        # print(self.old_instance_dict)
+        if self.ip in instance_dict:
+            ui = instance_dict[self.ip]['ui']
             if ui['base'] == 'config':
-                self.lblText.style.update({'visibility': ui['txt1']['visibilyty']})
                 self.lblText.set_text(ui['txt1']['text'])
-                self.ddScenario.style.update({'visibility: visible'})
+
                 self.ddScenario.new_from_list(ui['ddScenario']['list'])
-                self.btStart.style.update({'visibility: visible'})
-                self.set_root_widget(self.login_ui)
+
+                self.update_root(self.login_ui)
             if ui['base'] == 'end':
                 self.lblText.set_text(ui['txt1']['text'])
                 self.listRoles.new_from_list(ui['listRoles']['list'])
-                self.set_root_widget(self.end_ui)
+                self.update_root(self.end_ui)
             if ui['base'] == 'info':
                 self.lblText.set_text(ui['txt1']['text'])
-                self.imgPicture.set_image(ui['img']['file'])
-                self.set_root_widget(self.info_ui)
+                # self.imgPicture.set_image(ui['imgPicture']['file'])
+                self.imgPicture.set_image('../Rückseite.png')
+                self.update_root(self.info_ui)
             if ui['base'] == 'login':
+                self.btLogin.style.update({'visibility': ui['btLogin']['visibility']})
                 self.lblText.set_text(ui['txt1']['text'])
                 self.lblText2.set_text(ui['txt2']['text'])
 
-                self.set_root_widget(self.login_ui)
+                self.update_root(self.login_ui)
             if ui['base'] == 'poll':
                 self.lblText.set_text(ui['txt1']['text'])
                 self.lvPoll.new_from_list(ui['lvPoll']['list'])
-                self.set_root_widget(self.poll_ui)
+                self.update_root(self.poll_ui)
             if ui['base'] == 'tutorial':
                 self.lblText.set_text(ui['txt1']['text'])
                 self.lvTutorial.new_from_list(ui['lvTutorial']['list'])
                 self.ddScenario.new_from_list(ui['ddScenario']['list'])
-                self.set_root_widget(self.tutorial_ui)
+                self.update_root(self.tutorial_ui)
+        self.old_instance_dict = instance_dict
+
+    def update_root(self, new_root):
+        if not self.root == new_root:
+            self.set_root_widget(new_root)
 
     def main(self):
         self.construct_basic_ui()
@@ -103,6 +114,8 @@ class WebApp(App):
         self.lblText2.style.update(
             {"margin": "0px", "width": "217.0px", "height": "57.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
+
+        self.txtName = TextInput(single_line=True, hint='Name')
 
         self.ddScenario = DropDown()
         self.ddScenario.attributes.update(
@@ -223,6 +236,8 @@ class WebApp(App):
 
         self.vboxMain.append(self.lblText, 'lblText')
 
+        self.vboxMain.append(self.txtName, 'txtName')
+
         self.vboxMain.append(self.btLogin, 'btLogin')
 
         self.vboxMain.append(self.lblText2, 'lblText2')
@@ -267,12 +282,13 @@ class WebApp(App):
 
     def on_start_pressed(self, emitter):
         print('Start!')  # TODO
+        gamestatus_dict['status'] = 1
 
     def on_login_pressed(self, emitter):
         print('LOGIN')  # TODO
 
-        instance_dict.update({self.client_address: {
-            'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visiblility': 'hidden'},
+        instance_dict.update({self.ip: {
+            'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
                    'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'},
                    'txt2': {'text': 'Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf '}}}})
         print(instance_dict)
