@@ -3,7 +3,7 @@ from remi import start as remi_start
 from remi import App
 from threading import Thread
 
-ui = 'login'
+instance_dict = {}
 
 
 class WebApp(App):
@@ -13,20 +13,39 @@ class WebApp(App):
 
     def idle(self):
         """idle function called every update cycle"""
-        if ui == 'config':
-            self.set_root_widget(self.login_ui)
-        if ui == 'end':
-            self.set_root_widget(self.end_ui)
-        if ui == 'info':
-            self.set_root_widget(self.info_ui)
-        if ui == 'login':
-            self.set_root_widget(self.login_ui)
-        if ui == 'poll':
-            self.set_root_widget(self.poll_ui)
-        if ui == 'tutorial':
-            self.set_root_widget(self.tutorial_ui)
+        if self.client_address in instance_dict:
+            ui = instance_dict[self.client_address]['ui']
+            if ui['base'] == 'config':
+                self.lblText.style.update({'visibility': ui['txt1']['visibilyty']})
+                self.lblText.set_text(ui['txt1']['text'])
+                self.ddScenario.style.update({'visibility: visible'})
+                self.ddScenario.set  # TODO
+                self.btStart.style.update({'visibility: visible'})
+                self.set_root_widget(self.login_ui)
+            if ui['base'] == 'end':
+                self.lblText.set_text(ui['txt1']['text'])
+                self.listRoles.new_from_list(ui['listRoles']['list'])
+                self.set_root_widget(self.end_ui)
+            if ui['base'] == 'info':
+                self.lblText.set_text(ui['txt1']['text'])
+                self.imgPicture.set_image(ui['img']['file'])
+                self.set_root_widget(self.info_ui)
+            if ui['base'] == 'login':
+                self.lblText.set_text(ui['txt1']['text'])
+                self.lblText2.set_text(ui['txt2']['text'])
+
+                self.set_root_widget(self.login_ui)
+            if ui['base'] == 'poll':
+                self.lblText.set_text(ui['txt1']['text'])
+                self.lvPoll.new_from_list(ui['lvPoll']['list'])
+                self.set_root_widget(self.poll_ui)
+            if ui['base'] == 'tutorial':
+                self.lblText.set_text(ui['txt1']['text'])
+                self.lvTutorial.new_from_list(ui['lvTutorial']['list'])
+                self.set_root_widget(self.tutorial_ui)
 
     def main(self):
+        self.construct_basic_ui()
         self.construct_config_ui()
         self.construct_end_ui()
         self.construct_info_ui()
@@ -251,6 +270,10 @@ class WebApp(App):
     def on_login_pressed(self):
         print('LOGIN')  # TODO
 
+        instance_dict.update({self.client_address: {
+            'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visiblility': 'hidden'},
+                   'txt1': {'text': 'Du bist beim nächsten Spiel dabei!'}}}})
+
     def on_config_pressed(self):
         print('CONFIG')  # TODO
 
@@ -289,4 +312,3 @@ class WebThread(Thread):
 
 t = WebThread(WebApp)
 t.start()
-ui = 'poll'
