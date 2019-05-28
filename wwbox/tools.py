@@ -16,6 +16,9 @@ def send_gui(player, gui_commands):
 
 def set_gui(player, base, txt1, txt2=None, btStart=None, btLogin=None, btConf=None, ddScenario=None, imgPicture=None,
             listRoles=None, lvPoll=None, lvTutorial=None):
+    '''Sets the GUI for a Player.
+    set_gui(player=player_key, base='info', txt1={'text': 'Hallo ich bin eine autonome Info.'},
+                    imgPicture='Rückseite.png')'''
     instance_dict[player]['ui'].update({'base': base})
     instance_dict[player]['ui'].update({'txt1': txt1})
     if not txt2 is None:
