@@ -11,7 +11,7 @@ def play_audio(audio_file):
 
 def send_gui(player, gui_commands):
     """Updates Player's GUI"""
-    print()
+    print('PLEASE USE SET_GUI()')
     # TODO send information to players
     # if not death:
 
