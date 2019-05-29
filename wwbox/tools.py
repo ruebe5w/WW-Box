@@ -47,4 +47,5 @@ def send_info(player, txt, img=''):
     set_gui(player, 'info', {'text': txt}, imgPicture={'img': img})
 
 
-def send_poll(player)
+def send_poll(player, txt, array):
+    set_gui(player, base='poll', txt1={'text': txt}, lvPoll={'list': array})
