@@ -6,4 +6,4 @@ except:
     except:
         print('ERROR importing pip.')
 
-pip(['install', '-r' '../requirements.txt'])
+pip(['install', '-r' 'requirements.txt'])
