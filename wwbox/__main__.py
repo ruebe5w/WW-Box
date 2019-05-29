@@ -15,7 +15,9 @@ while True:
     if gamestatus_dict['status'] == 5:
 
         for player in game.players.keys():
-            send_tutorial(player, 'Hier ein kleines Tutorial zu Flos Künstler-WG:', game.scenario.roles.keys())
+            send_tutorial(player, 'Hier ein kleines Tutorial zu Flos Künstler-WG:',
+                          ['Bodyguard', 'Doenermann', 'Drogendealerin', 'Künstler', 'Nachbar', 'Nazi', 'OW-Suchtie',
+                           'Stalker', 'WG-Flittchen', 'WG-Sprecher', 'Wingwoman'])
         gamestatus_dict['status'] = 0
     if gamestatus_dict['status'] == 4:
         for player in game.players.keys():
