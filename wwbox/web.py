@@ -28,8 +28,12 @@ class WebApp(App):
                 self.update_root(self.end_ui)
             if ui['base'] == 'info':
                 self.lblText.set_text(ui['txt1']['text'])
-                # self.imgPicture.set_image(ui['imgPicture']['file'])
-                self.imgPicture.set_image('../Rückseite.png')
+                if ui['imgPicture']['img'] != '':
+                    self.imgPicture.style.update({'visibility': 'visible'})
+                    self.imgPicture.set_image(ui['imgPicture']['img'])
+                else:
+                    self.imgPicture.style.update({'visibility': 'hidden'})
+                # self.imgPicture.set_image('../Rückseite.png')
                 self.update_root(self.info_ui)
             if ui['base'] == 'login':
                 self.txtName.style.update({'visibility': ui['txtName']['visibility']})
