@@ -54,6 +54,23 @@ class Game:
             if status == self.players[player_key].status:
                 player_id_array.append(player_key)
         return player_id_array
+
+    def get_player_by_effect_has(self, effect, value):
+        player_id_array = []
+        for player_key in self.players.keys():
+            if self.players[player_key].is_effected(effect):
+                if value in self.players[player_key].effects[effect]:
+                    player_id_array.append(player_key)
+        return player_id_array
+
+    def get_player_by_effect_equals(self, effect, value):
+        player_id_array = []
+        for player_key in self.players.keys():
+            if self.players[player_key].is_effected(effect):
+                if value == self.players[player_key].effects[effect]:
+                    player_id_array.append(player_key)
+        return player_id_array
+
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
                  img: str,
