@@ -341,7 +341,7 @@ class WebThread(Thread):
 
     def run(self):
         # Configuration
-        configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 8081,
+        configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 80,
                          'config_multiple_instance': True, 'config_enable_file_cache': False,
                          'config_start_browser': False, 'config_resourcepath': './res/'}
 
