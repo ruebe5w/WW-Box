@@ -320,10 +320,10 @@ class WebApp(App):
     def on_config_pressed(self, emitter):
         print('CONFIG')
         self.on_login_pressed(emitter)
-        scenarios = import_scenario()
+        # scenarios = import_scenario()
         scen_list = []
-        for scenario in scenarios.keys():
-            scen_list.append(scenario)
+        # for scenario in scenarios.keys():
+        #    scen_list.append(scenario)
         print(scen_list)
         instance_dict[self.ip].update({'ui': {'base': 'config',
 
