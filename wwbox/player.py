@@ -19,8 +19,11 @@ class Player:
     def append_to_effect(self, effect, key, value):
         self.effects[effect].update({key: value})
 
-    def get_effects(self, key: str):
-        return self.effects[key]
+    def get_effect(self, key: str):
+        if self.is_effected(key):
+            return self.effects[key]
+        else:
+            return False
 
     def is_effected(self, effect):
         return effect in self.effects
