@@ -3,7 +3,8 @@ from wwbox.player import Player
 import random
 from wwbox.tools import *
 from wwbox.scenario import Scenario
-
+import time
+import operator
 
 class Game:
     """Represents a Game/a Round"""
@@ -78,14 +79,19 @@ class Game:
 
             set_announce_deaths()
             # Diskussion
-            send_gui(all, 'Abstimmungsdfdsdk')
+
+            for key in self.players.keys():
+                if self.players[key].status != 0:
+                    set_gui(self.players[key].id, base='poll', txt1={'text': 'Wen möchtet ihr umbringen?'},
+                            lvPoll={'list': self.get_player_names()})
             play_audio(self.scenario.audios['discuss_start'])
-            # wait
+            time.sleep(self.scenario.discussion_time / 2)
             play_audio(self.scenario.audios['discuss_half_time'])
-            # wait
+            time.sleep(self.scenario.discussion_time / 2)
             play_audio(self.scenario.audios['discuss_end'])
 
             # Abstimmung auswerten
+
             # player.status=1
             set_announce_deaths()
 
@@ -113,7 +119,7 @@ class Game:
         # 0R (Bürgermeister)
         play_audio(self.scenario.audios['town_sleep'])
         night()
-        while not self.__is_won():
+        while not self._is_won():
             day()
             night()
         set_announce_deaths()
@@ -126,6 +132,24 @@ class Game:
 
         bol = False
         return bol
+
+    def evaluate_voting(self):
+        poll_dict = {}
+        for ip in instance_dict.keys():
+            if 'poll' in instance_dict[ip]:
+                if instance_dict[ip]['poll'] in poll_dict:
+                    old = poll_dict[instance_dict[ip]['poll']]
+                    poll_dict.update({instance_dict[ip]['poll']: old + 1})
+                else:
+                    poll_dict.update({instance_dict[ip]['poll']: 1})
+        # Count votes:
+        max(poll_dict, key=operator.itemgetter(1))[0]
+
+    def get_player_names(self):
+        player_names = {}
+        for key in self.players.keys():
+            player_names.update({key: self.players[key].name})
+        return player_names
 
     def _role_assignment(self):
         print('Rollen werden zugeteilt...')

@@ -10,7 +10,7 @@ class Role:
                  scenario: str):
         self.name = name
         self.gender = gender
-        self.toa = toa  # time of awakening
+        self.toa = toa  # time of awakening 0:0R, 1:1R, 2:PR,3:KR,4:AR
         self.team = team
         self.night_actions = night_actions  # dict
         self.day_actions = day_actions  # dict

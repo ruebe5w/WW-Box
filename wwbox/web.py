@@ -326,6 +326,7 @@ class WebApp(App):
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
         print('POLL_Abstimmung')  # TODO
+        instance_dict[self.ip].update({'vote': selected_item_key})
 
     def lvTutorial_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
