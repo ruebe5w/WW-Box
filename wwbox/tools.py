@@ -9,13 +9,6 @@ def play_audio(audio_file):
     playsound(audio_file)
 
 
-def send_gui(player, gui_commands):
-    """Updates Player's GUI"""
-    print('PLEASE USE SET_GUI()')
-    # TODO send information to players
-    # if not death:
-
-
 def evaluate_voting():
     poll_dict = {}
     for ip in instance_dict.keys():
