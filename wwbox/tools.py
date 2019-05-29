@@ -16,6 +16,19 @@ def send_gui(player, gui_commands):
     # if not death:
 
 
+def evaluate_voting():
+    poll_dict = {}
+    for ip in instance_dict.keys():
+        if 'poll' in instance_dict[ip]:
+            if instance_dict[ip]['poll'] in poll_dict:
+                old = poll_dict[instance_dict[ip]['poll']]
+                poll_dict.update({instance_dict[ip]['poll']: old + 1})
+            else:
+                poll_dict.update({instance_dict[ip]['poll']: 1})
+    # Count votes:
+    return max(poll_dict.keys(), key=lambda k: poll_dict[k])  # TODO max vote
+
+
 def set_gui(player, base, txt1, txt2=None, btStart=None, btLogin=None, btConf=None, ddScenario=None, imgPicture=None,
             listRoles=None, lvPoll=None, lvTutorial=None):
     '''Sets the GUI for a Player.

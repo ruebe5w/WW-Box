@@ -71,6 +71,12 @@ class Game:
                     player_id_array.append(player_key)
         return player_id_array
 
+    def get_player_by_poll(self, poll_player_id_array, send_player_id_array, txt):
+        for player_id in send_player_id_array:
+            send_poll(player_id, txt, poll_player_id_array)
+            time.sleep(self.scenario.discussion_time)
+            return evaluate_voting()
+
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
                  img: str,
@@ -132,7 +138,7 @@ class Game:
             play_audio(self.scenario.audios['discuss_end'])
 
             # Abstimmung auswerten
-            self.players[self.evaluate_voting()].status = 1
+            self.players[evaluate_voting()].status = 1
 
             set_announce_deaths()
 
@@ -172,21 +178,6 @@ class Game:
             return True
         else:
             return False
-
-        bol = False
-        return bol
-
-    def evaluate_voting(self):
-        poll_dict = {}
-        for ip in instance_dict.keys():
-            if 'poll' in instance_dict[ip]:
-                if instance_dict[ip]['poll'] in poll_dict:
-                    old = poll_dict[instance_dict[ip]['poll']]
-                    poll_dict.update({instance_dict[ip]['poll']: old + 1})
-                else:
-                    poll_dict.update({instance_dict[ip]['poll']: 1})
-        # Count votes:
-        return max(poll_dict.keys(), key=lambda k: poll_dict[k])  # TODO max vote
 
     def get_player_names(self):
         player_names = {}
