@@ -7,4 +7,5 @@ s = Scenario(name='Flos Kuenstler-WG', author='Florian', description='Descriptio
              roles={})
 s.write_to_file()
 
-werwolf = Role('Werwolf', 'm', 1, 'Werwolf', )
+werwolf = Role('Werwolf', 'm', 1, 'Werwolf', {}, {}, {}, {}, 'img_file', 'default')
+werwolf.write_to_file()
