@@ -334,6 +334,7 @@ class WebApp(App):
     def on_tutorial_pressed(self, emitter):
         print('Tutorial')
         gamestatus_dict['status'] = 5
+        print(gamestatus_dict)
 
     def lvPoll_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
