@@ -222,7 +222,7 @@ class Game:
             if_role_in_cat(role, 'AR')
         self.order = order
 
-    def command_switch(self, command: str, *args):
+    def command_switch(self, command: str, args):
 
         if command == 'ps' or command == 'playsound':
             play_audio(args[0])
