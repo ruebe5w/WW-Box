@@ -19,7 +19,7 @@ class Game:
         self.actions = {}
         self.order = {}
 
-    def new_player(self, name: str, id: int):
+    def new_player(self, name: str, id: str):
         """Adds a new player Object to Game"""
         self.players[id] = Player(name, id)
 
@@ -84,22 +84,18 @@ class Game:
             nonlocal first_night
             if first_night:
                 print()
-                _night_wakeup('1R')
+                _night_wakeup(1)
                 first_night = False
-            _night_wakeup('PR')
-            _night_wakeup('KR')
-            _night_wakeup('AR')
+            _night_wakeup(2)
+            _night_wakeup(3)
+            _night_wakeup(4)
 
         def _night_wakeup(cat):
             for role in self.order[cat]:
                 role.wake_up()
-                for player in self.players:
-                    if role in player.roles:
-                        send_gui(player, "")  # TODO
 
         def day():
-            print()
-            # TODO
+
             play_audio(self.scenario.audios['town_awake'])
 
             set_announce_deaths()
@@ -116,13 +112,13 @@ class Game:
             play_audio(self.scenario.audios['discuss_end'])
 
             # Abstimmung auswerten
+            self.players[self.evaluate_voting()].status = 1
 
-            # player.status=1
             set_announce_deaths()
 
             play_audio(self.scenario.audios['town_sleep'])
 
-        def set_announce_deaths():  # TODO Überarbeiten
+        def set_announce_deaths():
             for player in self.players:
                 if player.status == 1:
                     for role_name in player.roles:
@@ -148,7 +144,14 @@ class Game:
         # Neustarten
 
     def _is_won(self):
-        # TODO
+        team_array = []
+        for player_key in self.players.keys():
+            if self.players[player_key].status > 0:
+                team_array.append(self.players[player_key].team)
+        if len(team_array) == 1:
+            return True
+        else:
+            return False
 
         bol = False
         return bol
@@ -163,7 +166,7 @@ class Game:
                 else:
                     poll_dict.update({instance_dict[ip]['poll']: 1})
         # Count votes:
-        max(poll_dict.keys(), key=lambda k: poll_dict[k])
+        return max(poll_dict.keys(), key=lambda k: poll_dict[k])  # TODO max vote
 
     def get_player_names(self):
         player_names = {}
@@ -219,7 +222,7 @@ class Game:
             if_role_in_cat(role, 'AR')
         self.order = order
 
-    def command_switch(self, command: str, *args)
+    def command_switch(self, command: str, *args):
 
         if command == 'ps' or command == 'playsound':
             play_audio(args[0])
