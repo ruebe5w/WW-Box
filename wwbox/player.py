@@ -13,6 +13,12 @@ class Player:
     def add_effect(self, key: str, value):
         self.effects[key] = value
 
+    def remove_effect(self, key: str):
+        self.effects.pop(key, None)
+
+    def append_to_effect(self, effect, key, value):
+        self.effects[effect].update({key: value})
+
     def get_effects(self, key: str):
         return self.effects[key]
 
@@ -33,4 +39,3 @@ class Player:
     def del_role(self, role):
         if role in self.roles:
             self.roles.remove(role)
-
