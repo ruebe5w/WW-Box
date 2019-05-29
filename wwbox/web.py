@@ -206,7 +206,7 @@ class WebApp(App):
         self.vboxMain.append(self.lblText, 'lblText')
 
         self.vboxMain.append(self.ddScenario, 'ddScenario')
-
+        self.vboxMain.append(self.btTutorial, 'btTutorial')
         self.vboxMain.append(self.btStart, 'btStart')
 
         self.vboxMain.append(self.lblMadeBy, 'lblMadeBy')
