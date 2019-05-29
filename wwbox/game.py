@@ -194,3 +194,19 @@ class Game:
             if_role_in_cat(role, 'KR')
             if_role_in_cat(role, 'AR')
         self.order = order
+
+    def command_switch(self, command: str, *args):
+        """Switch case for action commands"""
+        switcher = {
+            'ps': play_audio(args[0]),
+            'playsound': play_audio(args[0]),
+            'dk': self.direct_kill(args[0]),
+            'directkill': self.direct_kill(args[0]),
+            'ae': self.players[args[0]].add_effect(args[1], args[2]),
+            'add_effect': self.players[args[0]].add_effect(args[1], args[2]),
+            'rme': self.players[args[0]].remove_effect(args[1]),
+            'ate': self.players[args[0]].append_to_effect(args[1], args[2], args[3]),
+            'si': send_info(args[0], args[1], args[2])
+        }
+        func = switcher.get(command, lambda: 'Invalid argument')
+        return func
