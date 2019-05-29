@@ -55,3 +55,7 @@ def send_info(player, txt, img=''):
 
 def send_poll(player, txt, array):
     set_gui(player, base='poll', txt1={'text': txt}, lvPoll={'list': array})
+
+
+def send_tutorial(player, txt, array):
+    set_gui(player, base='tutorial', txt1={'text': txt}, lvTutorial={'list': array})

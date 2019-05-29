@@ -44,12 +44,12 @@ class WebApp(App):
                 self.update_root(self.login_ui)
             if ui['base'] == 'poll':
                 self.lblText.set_text(ui['txt1']['text'])
-                self.lvPoll.new_from_list(ui['lvPoll']['list'])
+                self.lvPoll.append(tuple(ui['lvPoll']['list']))
                 self.update_root(self.poll_ui)
             if ui['base'] == 'tutorial':
                 self.lblText.set_text(ui['txt1']['text'])
-                self.lvTutorial.new_from_list(ui['lvTutorial']['list'])
-                self.ddScenario.new_from_list(ui['ddScenario']['list'])
+                self.lvTutorial.append(tuple(ui['lvTutorial']['list']))
+                # self.ddScenario.new_from_list(ui['ddScenario']['list'])
                 self.update_root(self.tutorial_ui)
 
     def update_root(self, new_root):
@@ -157,7 +157,14 @@ class WebApp(App):
             {"margin": "0px", "width": "118.0px", "height": "38.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
         self.btConf.onclick.do(self.on_config_pressed)
-
+        self.btTutorial = Button('Tutorial')
+        self.btTutorial.attributes.update(
+            {"class": "Button", "editor_constructor": "('Konfigurieren')", "editor_varname": "btConf",
+             "editor_tag_type": "widget", "editor_newclass": "False", "editor_baseclass": "Button"})
+        self.btTutorial.style.update(
+            {"margin": "0px", "width": "118.0px", "height": "38.0px", "top": "20px", "position": "static",
+             "overflow": "auto", "order": "-1"})
+        self.btTutorial.onclick.do(self.on_tutorial_pressed)
         self.lblMadeBy = Label('made by Henry & Christopher with ❤️')
         self.lblMadeBy.attributes.update(
             {"class": "Label", "editor_constructor": "('made by Henry & Christopher with ❤️')",
@@ -274,7 +281,7 @@ class WebApp(App):
 
         self.vboxMain.append(self.lblText, 'lblText')
 
-        self.vboxMain.append(self.ddScenario, 'ddScenario')
+        # self.vboxMain.append(self.ddScenario, 'ddScenario')
 
         self.vboxMain.append(self.lvTutorial, 'lvTutorial')
 
@@ -293,7 +300,7 @@ class WebApp(App):
         print()
 
     def on_login_pressed(self, emitter):
-        print('LOGIN')  # TODO
+        print('LOGIN')
 
         instance_dict.update({self.ip: {'name': self.txtName.get_text(),
                                         'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
@@ -324,12 +331,16 @@ class WebApp(App):
                                               'ddScenario': {'list': scen_list}
                                               }})
 
+    def on_tutorial_pressed(self, emitter):
+        print('Tutorial')
+        gamestatus_dict['status'] = 5
+
     def lvPoll_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
             You can retrieve the item rapidly
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
-        print('POLL_Abstimmung')  # TODO
+        print('POLL_Abstimmung')
         instance_dict[self.ip].update({'vote': selected_item_key})
 
     def lvTutorial_on_selected(self, widget, selected_item_key):
@@ -337,7 +348,9 @@ class WebApp(App):
             You can retrieve the item rapidly
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
-        print('TUTORIAL_SELECTED')  # TODO
+        print('TUTORIAL_SELECTED')
+        gamestatus_dict['status'] = 4
+        gamestatus_dict.update({'tutorial': selected_item_key})
 
 
 class WebThread(Thread):
@@ -345,7 +358,7 @@ class WebThread(Thread):
         Thread.__init__(self)
 
     def run(self):
-        # Configuration
+        # Configuration #TODO multiple instances
         configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 80,
                          'config_multiple_instance': True, 'config_enable_file_cache': False,
                          'config_start_browser': False, 'config_resourcepath': './res/'}

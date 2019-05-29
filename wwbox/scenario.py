@@ -53,7 +53,7 @@ class Scenario:
                  'Nachbar',
                  'WG-Flittchen',
                  'Bodyguard',
-                 'Doenermann',
+                 'Dönermann',
                  'Nazi',
                  'Künstler',
                  'Nazi',

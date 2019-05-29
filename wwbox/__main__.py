@@ -11,5 +11,15 @@ while gamestatus_dict['status'] == 0:
         for player_key in instance_dict.keys():
             if player_key not in game.players:
                 game.new_player(instance_dict[player_key]['name'], player_key)
-if gamestatus_dict['status'] == 1:
-    game.start(gamestatus_dict['scenario'])
+while True:
+    if gamestatus_dict['status'] == 5:
+
+        for player in game.players.keys():
+            send_tutorial(player, 'Hier ein kleines Tutorial zu Flos Künstler-WG:', game.scenario.roles.keys())
+        gamestatus_dict['status'] = 0
+    if gamestatus_dict['status'] == 4:
+        for player in game.players.keys():
+            send_info(player, '_', 'img/' + gamestatus_dict['tutorial'] + '.png')
+        playsound('audios/' + gamestatus_dict['tutorial'] + '.wav')
+    if gamestatus_dict['status'] == 1:
+        game.start(gamestatus_dict['scenario'])
