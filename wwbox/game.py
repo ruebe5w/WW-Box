@@ -23,9 +23,33 @@ class Game:
         """Adds a new player Object to Game"""
         self.players[id] = Player(name, id)
 
-    def get_player(self, id):
+    def get_player_by_id(self, id):
         """Get Player Object from ID"""
         return self.players[id]
+
+    def get_players_by_role(self, role):
+        player_id_array = []
+        for player_key in self.players.keys():
+            if role in self.players[player_key].roles:
+                player_id_array.append(player_key)
+
+    def get_player_by_effect(self, effect):
+        player_id_array = []
+        for player_key in self.players.keys():
+            if self.players[player_key].is_effected(effect):
+                player_id_array.append(player_key)
+
+    def get_player_by_team(self, team):
+        player_id_array = []
+        for player_key in self.players.keys():
+            if team == self.players[player_key].team:
+                player_id_array.append(player_key)
+
+    def get_player_by_status(self, status):
+        player_id_array = []
+        for player_key in self.players.keys():
+            if status == self.players[player_key].status:
+                player_id_array.append(player_key)
 
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
