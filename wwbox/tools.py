@@ -41,3 +41,7 @@ def set_gui(player, base, txt1, txt2=None, btStart=None, btLogin=None, btConf=No
         instance_dict[player]['ui'].update({'lvPoll': lvPoll})
     if not lvTutorial is None:
         instance_dict[player]['ui'].update({'lvTutorial': lvTutorial})
+
+
+def send_info(player, txt, img=''):
+    set_gui(player, 'info', {'text': txt}, imgPicture={'img': img})
