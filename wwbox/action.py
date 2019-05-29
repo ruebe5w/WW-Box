@@ -1,5 +1,5 @@
 from configparser import ConfigParser
-
+from wwbox.game import Game
 
 class Action:
     """Represents a Action"""
