@@ -41,10 +41,42 @@ class Scenario:
         del self.roles[role_name]
         del self.role_weighting[role_name]
 
-    def calculate_role_count(self, player_count):
+    def calculate_role_count(self, player_count):  # TODO Fertig Rollenanzahl berechnen
         counts = {'werwolf': 1}
-        for role in self.roles.keys():
-            print()
-            # TODO Rollenanzahl berechnen
-            # z.B. {'role_name': 5}
+        roles = ['Nazi',
+                 'Stalker',
+                 'Nazi',
+                 'Drogendealerin',
+                 'Wingwoman',
+                 'OW-Suchtie',
+                 'Nazi',
+                 'Nachbar',
+                 'WG-Flittchen',
+                 'Bodyguard',
+                 'Doenermann',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Nazi',
+                 'Künstler',
+                 'Nazi',
+                 'Künstler'
+                 ]
+        role_array = []
+        for i in range(0, player_count):
+            role_array.append(roles[i])
+        for role in role_array:
+            counts['role'] = role_array.count(role)
+
+        # z.B. {'role_name': 5}
         return counts
