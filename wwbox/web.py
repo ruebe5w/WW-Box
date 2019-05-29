@@ -351,7 +351,7 @@ class WebApp(App):
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
         print('TUTORIAL_SELECTED')
         gamestatus_dict['status'] = 4
-        gamestatus_dict.update({'tutorial': selected_item_key})
+        gamestatus_dict.update({'tutorial': self.lvTutorial.get_value()})
 
 
 class WebThread(Thread):
