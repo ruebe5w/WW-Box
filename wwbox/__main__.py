@@ -15,6 +15,7 @@ while True:
     if gamestatus_dict['status'] == 5:
 
         for player in game.players.keys():
+            print(player)
             send_tutorial(player, 'Hier ein kleines Tutorial zu Flos Künstler-WG:',
                           ['Bodyguard', 'Doenermann', 'Drogendealerin', 'Künstler', 'Nachbar', 'Nazi', 'OW-Suchtie',
                            'Stalker', 'WG-Flittchen', 'WG-Sprecher', 'Wingwoman'])
