@@ -1,6 +1,7 @@
 from wwbox.game import *
 from wwbox.web import WebThread, instance_dict
 
+import os
 web_thread = WebThread()
 web_thread.start()
 old_instance_dict = {}
@@ -23,6 +24,7 @@ while True:
     if gamestatus_dict['status'] == 4:
         for player in game.players.keys():
             send_info(player, '_', 'img/' + gamestatus_dict['tutorial'] + '.png')
-        playsound('audios/' + gamestatus_dict['tutorial'] + '.wav')
+        os.system('aplay audios/' + gamestatus_dict['tutorial'] + '.wav')
+        # playsound('audios/' + gamestatus_dict['tutorial'] + '.wav')
     if gamestatus_dict['status'] == 1:
         game.start(gamestatus_dict['scenario'])
