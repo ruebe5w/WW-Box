@@ -6,6 +6,7 @@ from wwbox.scenario import Scenario
 import time
 import operator
 
+
 class Game:
     """Represents a Game/a Round"""
 
@@ -104,13 +105,8 @@ class Game:
                         for action_name in self.roles[role_name].on_attack_actions:
                             self.actions[action_name].run(player)
                     if player.status == 1:
-                        play_audio(self.scenario.audios['player_death'])
-                        for role_name in player.roles:
-                            for action_name in self.roles[role_name].death_actions:
-                                self.actions[action_name].run(player)
-                        player.status = 0
-                        player.can_speak = False
-                        player.can_vote = False
+                        # play_audio(self.scenario.audios['player_death'])
+                        self.direct_kill(player.id)
 
                     else:
                         player.status = 2
@@ -143,13 +139,22 @@ class Game:
                 else:
                     poll_dict.update({instance_dict[ip]['poll']: 1})
         # Count votes:
-        max(poll_dict, key=operator.itemgetter(1))[0]
+        max(poll_dict.keys(), key=lambda k: poll_dict[k])
 
     def get_player_names(self):
         player_names = {}
         for key in self.players.keys():
             player_names.update({key: self.players[key].name})
         return player_names
+
+    def direct_kill(self, player_id):
+        player = self.roles[player_id]
+        for role_name in player.roles:
+            for action_name in self.roles[role_name].death_actions:
+                self.actions[action_name].run(player)
+        player.status = 0
+        player.can_speak = False
+        player.can_vote = False
 
     def _role_assignment(self):
         print('Rollen werden zugeteilt...')
