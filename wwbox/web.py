@@ -10,13 +10,11 @@ class WebApp(App):
     def __init__(self, *args, **kwargs):
         if not 'editing_mode' in kwargs.keys():
             super(WebApp, self).__init__(*args, static_file_path={'my_res': './res/'})
-        self.old_instance_dict = instance_dict
-        self.ip = self.client_address[0]
 
     def idle(self):
         """idle function called every update cycle"""
         # print(instance_dict)
-        # print(self.old_instance_dict)
+
         if self.ip in instance_dict:
             ui = instance_dict[self.ip]['ui']
             if ui['base'] == 'config':
@@ -49,13 +47,13 @@ class WebApp(App):
                 self.lvTutorial.new_from_list(ui['lvTutorial']['list'])
                 self.ddScenario.new_from_list(ui['ddScenario']['list'])
                 self.update_root(self.tutorial_ui)
-        self.old_instance_dict = instance_dict
 
     def update_root(self, new_root):
         if not self.root == new_root:
             self.set_root_widget(new_root)
 
     def main(self):
+        self.ip = self.client_address[0]
         self.construct_basic_ui()
         self.construct_config_ui()
         self.construct_end_ui()
