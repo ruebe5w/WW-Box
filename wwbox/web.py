@@ -53,6 +53,7 @@ class WebApp(App):
                 self.update_root(self.tutorial_ui)
 
     def update_root(self, new_root):
+        """Updates root widget"""
         if not self.root == new_root:
             self.set_root_widget(new_root)
 
