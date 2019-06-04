@@ -34,14 +34,17 @@ class Scenario:
             file.write(f)
 
     def update_role(self, role, weighting):
+        """Updates Roles Weighting in Scenario. Maybe unnecessary."""
         self.roles.update({role.name: role})
         self.role_weighting.update({role.name: weighting})
 
     def remove_role(self, role_name):
+        """Removes a Role from the Scenario."""
         del self.roles[role_name]
         del self.role_weighting[role_name]
 
     def calculate_role_count(self, player_count):  # TODO Fertig Rollenanzahl berechnen
+        """Calculate Role-Counts based on player-Count."""
         counts = {'werwolf': 1}
         roles = ['Nazi',
                  'Stalker',
