@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def import_scenario():
+    """Imports Scenarios from Scenario-Config-Files."""
     scenario_file_array = __import_scenario_files()
     scenario_array = {}
     for scenario_file in scenario_file_array:
@@ -30,6 +31,7 @@ def import_scenario():
 
 # name: str, id: int, kind: str, conditions, target: Player
 def import_roles():
+    """Imports roles from Role-Config-Files."""
     role_file_array = __import_role_files()
     role_array = {}
     for role_file in role_file_array:
@@ -55,6 +57,7 @@ def import_roles():
 
 
 def import_dict(previous_dict, value_dict, key_cat: str):
+    """Imports dicts from Config-Files"""
     return_dict = {}
     for key in previous_dict.keys():
         if key not in value_dict:
@@ -64,6 +67,7 @@ def import_dict(previous_dict, value_dict, key_cat: str):
 
 
 def import_actions():
+    """Imports Actions from Action-Config-Files"""
     action_file_array = __import_action_files()
     action_array = {}
     for action_file in action_file_array:
@@ -80,6 +84,7 @@ def import_actions():
 
 
 def __import_scenario_files():
+    """Imports Scenario-Files"""
     ending = '.ini'
     path = 'scenarios'
     scenario_array = __import_files(path, ending)
