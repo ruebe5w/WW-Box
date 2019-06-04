@@ -4,12 +4,13 @@ gamestatus_dict = {'status': 0, 'scenario': 'default'}
 instance_dict = {}
 
 
-def play_audio(audio_file):
+def play_audio(audio_file):  # TODO Does not work on the Raspberry
     """Plays an audio file"""
     playsound(audio_file)
 
 
 def evaluate_voting():
+    """Evaluates the Voting-Results in the instance_dict. Returns Array with the Player-ID(s)"""
     poll_dict = {}
     for ip in instance_dict.keys():
         if 'poll' in instance_dict[ip]:
@@ -50,12 +51,15 @@ def set_gui(player, base, txt1, txt2=None, btStart=None, btLogin=None, btConf=No
 
 
 def send_info(player, txt, img=''):
+    """Sends an info GUI to passed player-id"""
     set_gui(player, 'info', {'text': txt}, imgPicture={'img': img})
 
 
 def send_poll(player, txt, array):
+    """Sends an Poll GUI to passed player-id"""
     set_gui(player, base='poll', txt1={'text': txt}, lvPoll={'list': array})
 
 
 def send_tutorial(player, txt, array):
+    """Sends an Tutorial GUI to passed player-id"""
     set_gui(player, base='tutorial', txt1={'text': txt}, lvTutorial={'list': array})
