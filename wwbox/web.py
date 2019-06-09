@@ -44,10 +44,12 @@ class WebApp(App):
                 self.update_root(self.login_ui)
             if ui['base'] == 'poll':
                 self.lblText.set_text(ui['txt1']['text'])
+                self.lvPoll.empty()
                 self.lvPoll.append(tuple(ui['lvPoll']['list']))
                 self.update_root(self.poll_ui)
             if ui['base'] == 'tutorial':
                 self.lblText.set_text(ui['txt1']['text'])
+                self.lvTutorial.empty()
                 self.lvTutorial.append(tuple(ui['lvTutorial']['list']))
                 # self.ddScenario.new_from_list(ui['ddScenario']['list'])
                 self.update_root(self.tutorial_ui)
@@ -55,6 +57,7 @@ class WebApp(App):
     def update_root(self, new_root):
         """Updates root widget"""
         if not self.root == new_root:
+            print("Update GUI")
             self.set_root_widget(new_root)
 
     def main(self):
@@ -96,8 +99,8 @@ class WebApp(App):
              "editor_baseclass": "Label"})
         self.lblTitle.style.update(
             {"margin": "0px", "width": "169.0px", "height": "42.0px", "top": "20px", "position": "static",
-             "overflow": "auto", "order": "-1", "font-size": "40px", "font-weight": "bolder",
-             "font-style": "normal"})
+             "order": "-1", "font-size": "40px", "font-weight": "bolder",
+             "font-style": "normal", "text-align": "center"})
 
         self.lblText = Label('Wenn du mitspielen möchtest drücke auf ')
         self.lblText.attributes.update(
@@ -106,7 +109,7 @@ class WebApp(App):
              "editor_baseclass": "Label"})
         self.lblText.style.update(
             {"margin": "0px", "width": "260.0px", "height": "27.0px", "top": "380.0px", "position": "static",
-             "overflow": "auto", "order": "-1", "left": "382.0px"})
+             "overflow": "auto", "order": "-1", "left": "382.0px", "text-align": "center"})
 
         self.lblText2 = Label('Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf ')
         self.lblText2.attributes.update({"class": "Label",
@@ -115,9 +118,12 @@ class WebApp(App):
                                          "editor_newclass": "False", "editor_baseclass": "Label"})
         self.lblText2.style.update(
             {"margin": "0px", "width": "217.0px", "height": "57.0px", "top": "20px", "position": "static",
-             "overflow": "auto", "order": "-1"})
+             "overflow": "auto", "order": "-1", "text-align": "center"})
 
         self.txtName = TextInput(single_line=True, hint='Name')
+        self.txtName.style.update(
+            {"margin": "0px", "width": "217.0px", "height": "57.0px", "top": "20px", "position": "static",
+             "overflow": "auto", "order": "-1", "text-align": "center"})
         self.txtName.onchange.do(self.txtName_on_change)
 
         self.ddScenario = DropDown()
@@ -193,10 +199,10 @@ class WebApp(App):
              "display": "table", "overflow": "auto", "order": "-1"})
 
         items = []
-        self.lvPoll = ListView.new_from_list(items, width=300, height=120, margin='10px')
+        self.lvPoll = ListView.new_from_list(items, width='75%', margin='10px')  # , height=120
         self.lvPoll.onselection.do(self.lvPoll_on_selected)
 
-        self.lvTutorial = ListView.new_from_list(items, width=300, height=120, margin='10px')
+        self.lvTutorial = ListView.new_from_list(items, width='75%', margin='10px')  # , height=120
         self.lvTutorial.onselection.do(self.lvTutorial_on_selected)
 
     def construct_config_ui(self):
@@ -361,7 +367,7 @@ class WebThread(Thread):
 
     def run(self):
         # Configuration #TODO multiple instances
-        configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 80,
+        configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 8080,
                          'config_multiple_instance': True, 'config_enable_file_cache': False,
                          'config_start_browser': False, 'config_resourcepath': './res/'}
 
