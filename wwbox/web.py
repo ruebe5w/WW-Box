@@ -77,7 +77,7 @@ class WebApp(App):
             {"class": "HBox", "editor_constructor": "()", "editor_varname": "hboxMain", "editor_tag_type": "widget",
              "editor_newclass": "False", "editor_baseclass": "HBox"})
         self.hboxMain.style.update(
-            {"margin": "0px", "width": "100%", "height": "100%", "top": "9px", "left": "12px",
+            {"margin": "0px", "width": "100%", "height": "100%",
              "position": "absolute",
              "display": "flex", "justify-content": "space-around", "align-items": "center", "flex-direction": "row",
              "overflow": "auto"})
@@ -86,7 +86,7 @@ class WebApp(App):
             {"class": "VBox", "editor_constructor": "()", "editor_varname": "vboxMain", "editor_tag_type": "widget",
              "editor_newclass": "False", "editor_baseclass": "VBox"})
         self.vboxMain.style.update(
-            {"margin": "0px", "width": "882.0px", "height": "735.0px", "top": "86.0px", "position": "static",
+            {"margin": "0px", "width": "100%", "height": "100%", "position": "static",
              "display": "flex", "justify-content": "space-around", "align-items": "center", "flex-direction": "column",
              "overflow": "auto", "order": "-1", "left": "116.0px"})
 
@@ -108,8 +108,9 @@ class WebApp(App):
              "editor_varname": "lblText", "editor_tag_type": "widget", "editor_newclass": "False",
              "editor_baseclass": "Label"})
         self.lblText.style.update(
-            {"margin": "0px", "width": "260.0px", "height": "27.0px", "top": "380.0px", "position": "static",
-             "overflow": "auto", "order": "-1", "left": "382.0px", "text-align": "center"})
+            {"margin": "0px", "top": "380.0px", "position": "static",
+             "overflow": "auto", "order": "-1", "left": "382.0px",
+             "text-align": "center"})  # "width": "260.0px", "height": "27.0px",
 
         self.lblText2 = Label('Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf ')
         self.lblText2.attributes.update({"class": "Label",
