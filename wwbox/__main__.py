@@ -25,7 +25,7 @@ while True:
     if gamestatus_dict['status'] == 4:
         for player in game.players.keys():
             send_info(player, '_', 'img/' + gamestatus_dict['tutorial'] + '.png')
-        os.system('aplay audios/' + gamestatus_dict['tutorial'] + '.wav')
+        os.system('aplay ../audios/' + gamestatus_dict['tutorial'] + '.wav')
         # playsound('audios/' + gamestatus_dict['tutorial'] + '.wav')
         gamestatus_dict['status'] = 5
     if gamestatus_dict['status'] == 1:
