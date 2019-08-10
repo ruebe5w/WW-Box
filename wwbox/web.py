@@ -16,48 +16,53 @@ class WebApp(App):
         # print(instance_dict)
 
         if self.ip in instance_dict:
-            ui = instance_dict[self.ip]['ui']
-            if ui['base'] == 'config':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.ddScenario.append(tuple(ui['ddScenario']['list']))
+            new_ui = instance_dict[self.ip]['ui']
+            if not new_ui == self.__old_ui:
+                self.__old_ui = new_ui
+                ui = self.__old_ui
+                if ui['base'] == 'config':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.ddScenario.append(tuple(ui['ddScenario']['list']))
 
-                self.update_root(self.config_ui)
-            if ui['base'] == 'end':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.listRoles.new_from_list(ui['listRoles']['list'])
-                self.update_root(self.end_ui)
-            if ui['base'] == 'info':
-                self.lblText.set_text(ui['txt1']['text'])
-                if ui['imgPicture']['img'] != '':
-                    self.imgPicture.style.update({'visibility': 'visible'})
-                    self.imgPicture.set_image(ui['imgPicture']['img'])
-                else:
-                    self.imgPicture.style.update({'visibility': 'hidden'})
-                # self.imgPicture.set_image('../Rückseite.png')
-                self.update_root(self.info_ui)
-            if ui['base'] == 'login':
-                self.txtName.style.update({'visibility': ui['txtName']['visibility']})
-                self.btLogin.style.update({'visibility': ui['btLogin']['visibility']})
-                self.lblText.set_text(ui['txt1']['text'])
-                self.lblText2.set_text(ui['txt2']['text'])
+                    self.update_root(self.config_ui)
+                if ui['base'] == 'end':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.listRoles.new_from_list(ui['listRoles']['list'])
+                    self.update_root(self.end_ui)
+                if ui['base'] == 'info':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    if ui['imgPicture']['img'] != '':
+                        self.imgPicture.style.update({'visibility': 'visible'})
+                        print(ui['imgPicture']['img'])
+                        self.imgPicture.set_image(ui['imgPicture']['img'])
 
-                self.update_root(self.login_ui)
-            if ui['base'] == 'poll':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.lvPoll.empty()
-                self.lvPoll.append(tuple(ui['lvPoll']['list']))
-                self.update_root(self.poll_ui)
-            if ui['base'] == 'tutorial':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.lvTutorial.empty()
-                self.lvTutorial.append(tuple(ui['lvTutorial']['list']))
-                # self.ddScenario.new_from_list(ui['ddScenario']['list'])
-                self.update_root(self.tutorial_ui)
+                    else:
+                        self.imgPicture.style.update({'visibility': 'hidden'})
+                    # self.imgPicture.set_image('../Rückseite.png')
+                    self.update_root(self.info_ui)
+                if ui['base'] == 'login':
+                    self.txtName.style.update({'visibility': ui['txtName']['visibility']})
+                    self.btLogin.style.update({'visibility': ui['btLogin']['visibility']})
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.lblText2.set_text(ui['txt2']['text'])
+
+                    self.update_root(self.login_ui)
+                if ui['base'] == 'poll':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.lvPoll.empty()
+                    self.lvPoll.append(tuple(ui['lvPoll']['list']))
+                    self.update_root(self.poll_ui)
+                if ui['base'] == 'tutorial':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.lvTutorial.empty()
+                    self.lvTutorial.append(tuple(ui['lvTutorial']['list']))
+                    # self.ddScenario.new_from_list(ui['ddScenario']['list'])
+                    self.update_root(self.tutorial_ui)
 
     def update_root(self, new_root):
         """Updates root widget"""
         if not self.root == new_root:
-            print("Update GUI")
+            print("----Update GUI----")
             self.set_root_widget(new_root)
 
     def main(self):
@@ -69,6 +74,7 @@ class WebApp(App):
         self.construct_login_ui()
         self.construct_poll_ui()
         self.construct_tutorial_ui()
+        self.__old_ui = ""
         return self.login_ui
 
     def construct_root_ui(self):
@@ -183,9 +189,9 @@ class WebApp(App):
             {"margin": "0px", "width": "236.0px", "height": "264.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
 
-        self.imgPicture = Image('bild.png')
+        self.imgPicture = Image('../img/Nachbar.png')
         self.imgPicture.attributes.update(
-            {"class": "Image", "src": "bild.png", "editor_constructor": "('bild.png')", "editor_varname": "imgPicture",
+            {"class": "Image", "src": '../img/Nachbar.png', "editor_varname": "imgPicture",
              "editor_tag_type": "widget", "editor_newclass": "False", "editor_baseclass": "Image"})
         self.imgPicture.style.update(
             {"margin": "0px", "width": "100px", "height": "100px", "top": "20px", "position": "static",
@@ -300,7 +306,7 @@ class WebApp(App):
         return self.tutorial_ui
 
     def on_start_pressed(self, emitter):
-        print('Start!')
+        print('----Start pressed----')
         gamestatus_dict['scenario'] = self.ddScenario.get_value()
         gamestatus_dict['status'] = 1
 
@@ -308,7 +314,7 @@ class WebApp(App):
         print()
 
     def on_login_pressed(self, emitter):
-        print('LOGIN')
+        print('----Login pressed----')
 
         instance_dict.update({self.ip: {'name': self.txtName.get_text(),
                                         'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
@@ -319,19 +325,18 @@ class WebApp(App):
         # print(instance_dict)
 
     def txtName_on_change(self, widget, value):
-        print(value)
         if value != '':
             self.btLogin.set_enabled(enabled=True)
         else:
             self.btLogin.set_enabled(enabled=False)
 
     def on_config_pressed(self, emitter):
-        print('CONFIG')
+        print('----Config pressed----')
         self.on_login_pressed(emitter)
-        # scenarios = import_scenario()
+        scenarios = import_scenario()
         scen_list = []
-        # for scenario in scenarios.keys():
-        #    scen_list.append(scenario)
+        for scenario in scenarios.keys():
+            scen_list.append(scenario)
         print(scen_list)
         instance_dict[self.ip].update({'ui': {'base': 'config',
 
@@ -340,26 +345,29 @@ class WebApp(App):
                                               }})
 
     def on_tutorial_pressed(self, emitter):
-        print('Tutorial')
+        print('----Tutorial pressed----')
         gamestatus_dict['status'] = 5
-        print(gamestatus_dict)
+        # print(gamestatus_dict)
+
 
     def lvPoll_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
             You can retrieve the item rapidly
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
-        print('POLL_Abstimmung')
-        instance_dict[self.ip].update({'vote': selected_item_key})
+        if selected_item_key is not None:
+            print('POLL_Abstimmung')
+            instance_dict[self.ip].update({'vote': selected_item_key})
 
     def lvTutorial_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
             You can retrieve the item rapidly
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
-        print('TUTORIAL_SELECTED')
-        gamestatus_dict['status'] = 4
-        gamestatus_dict.update({'tutorial': self.lvTutorial.children[selected_item_key].get_text()})
+        if selected_item_key is not None:
+            print('TUTORIAL_SELECTED')
+            gamestatus_dict['status'] = 4
+            gamestatus_dict.update({'tutorial': self.lvTutorial.children[selected_item_key].get_text()})
 
 
 class WebThread(Thread):
