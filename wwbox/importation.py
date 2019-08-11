@@ -86,7 +86,7 @@ def import_actions():
 def __import_scenario_files():
     """Imports Scenario-Files"""
     ending = '.ini'
-    path = 'scenarios'
+    path = '../scenarios'
     scenario_array = __import_files(path, ending)
     return scenario_array
 
