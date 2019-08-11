@@ -16,10 +16,10 @@ class WebApp(App):
         # print(instance_dict)
 
         if self.ip in instance_dict:
-            new_ui = instance_dict[self.ip]['ui']
-            if not new_ui == self.__old_ui:
-                self.__old_ui = new_ui
-                ui = self.__old_ui
+            self.new_ui = instance_dict[self.ip]['ui']
+            if not self.new_ui == self.__old_ui:
+                
+                ui = self.new_ui
                 if ui['base'] == 'config':
                     self.lblText.set_text(ui['txt1']['text'])
                     self.ddScenario.append(tuple(ui['ddScenario']['list']))
@@ -63,6 +63,7 @@ class WebApp(App):
         """Updates root widget"""
         if not self.root == new_root:
             print("----Update GUI----")
+            self.__old_ui = self.new_ui
             self.set_root_widget(new_root)
 
     def main(self):
