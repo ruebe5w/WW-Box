@@ -187,7 +187,7 @@ class Game:
         team_array = []
         for player_key in self.players.keys():
             if self.players[player_key].status > 0:
-                team_array.append(self.players[player_key].team)
+                team_array.append(self.players[player_key].roles[0].team)
         if len(team_array) == 1:
             return True
         else:
