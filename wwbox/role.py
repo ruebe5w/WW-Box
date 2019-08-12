@@ -51,5 +51,6 @@ class Role:
             file.write(f)
 
     def wake_up(self):
+        """Triggers the Night-Actions of the Role."""
         print()
         # TODO role wake_up

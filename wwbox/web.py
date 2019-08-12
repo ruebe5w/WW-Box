@@ -16,44 +16,54 @@ class WebApp(App):
         # print(instance_dict)
 
         if self.ip in instance_dict:
-            ui = instance_dict[self.ip]['ui']
-            if ui['base'] == 'config':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.ddScenario.append(tuple(ui['ddScenario']['list']))
+            self.new_ui = instance_dict[self.ip]['ui']
+            if not self.new_ui == self.__old_ui:
+                
+                ui = self.new_ui
+                if ui['base'] == 'config':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.ddScenario.append(tuple(ui['ddScenario']['list']))
 
-                self.update_root(self.config_ui)
-            if ui['base'] == 'end':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.listRoles.new_from_list(ui['listRoles']['list'])
-                self.update_root(self.end_ui)
-            if ui['base'] == 'info':
-                self.lblText.set_text(ui['txt1']['text'])
-                if ui['imgPicture']['img'] != '':
-                    self.imgPicture.style.update({'visibility': 'visible'})
-                    self.imgPicture.set_image(ui['imgPicture']['img'])
-                else:
-                    self.imgPicture.style.update({'visibility': 'hidden'})
-                # self.imgPicture.set_image('../Rückseite.png')
-                self.update_root(self.info_ui)
-            if ui['base'] == 'login':
-                self.txtName.style.update({'visibility': ui['txtName']['visibility']})
-                self.btLogin.style.update({'visibility': ui['btLogin']['visibility']})
-                self.lblText.set_text(ui['txt1']['text'])
-                self.lblText2.set_text(ui['txt2']['text'])
+                    self.update_root(self.config_ui)
+                if ui['base'] == 'end':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.listRoles.new_from_list(ui['listRoles']['list'])
+                    self.update_root(self.end_ui)
+                if ui['base'] == 'info':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    if ui['imgPicture']['img'] != '':
+                        self.imgPicture.style.update({'visibility': 'visible'})
+                        print(ui['imgPicture']['img'])
+                        self.imgPicture.set_image(ui['imgPicture']['img'])
 
-                self.update_root(self.login_ui)
-            if ui['base'] == 'poll':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.lvPoll.new_from_list(ui['lvPoll']['list'])
-                self.update_root(self.poll_ui)
-            if ui['base'] == 'tutorial':
-                self.lblText.set_text(ui['txt1']['text'])
-                self.lvTutorial.new_from_list(ui['lvTutorial']['list'])
-                self.ddScenario.new_from_list(ui['ddScenario']['list'])
-                self.update_root(self.tutorial_ui)
+                    else:
+                        self.imgPicture.style.update({'visibility': 'hidden'})
+                    # self.imgPicture.set_image('../Rückseite.png')
+                    self.update_root(self.info_ui)
+                if ui['base'] == 'login':
+                    self.txtName.style.update({'visibility': ui['txtName']['visibility']})
+                    self.btLogin.style.update({'visibility': ui['btLogin']['visibility']})
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.lblText2.set_text(ui['txt2']['text'])
+
+                    self.update_root(self.login_ui)
+                if ui['base'] == 'poll':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.lvPoll.empty()
+                    self.lvPoll.append(tuple(ui['lvPoll']['list']))
+                    self.update_root(self.poll_ui)
+                if ui['base'] == 'tutorial':
+                    self.lblText.set_text(ui['txt1']['text'])
+                    self.lvTutorial.empty()
+                    self.lvTutorial.append(tuple(ui['lvTutorial']['list']))
+                    # self.ddScenario.new_from_list(ui['ddScenario']['list'])
+                    self.update_root(self.tutorial_ui)
 
     def update_root(self, new_root):
+        """Updates root widget"""
         if not self.root == new_root:
+            print("----Update GUI----")
+            self.__old_ui = self.new_ui
             self.set_root_widget(new_root)
 
     def main(self):
@@ -65,6 +75,7 @@ class WebApp(App):
         self.construct_login_ui()
         self.construct_poll_ui()
         self.construct_tutorial_ui()
+        self.__old_ui = ""
         return self.login_ui
 
     def construct_root_ui(self):
@@ -73,7 +84,7 @@ class WebApp(App):
             {"class": "HBox", "editor_constructor": "()", "editor_varname": "hboxMain", "editor_tag_type": "widget",
              "editor_newclass": "False", "editor_baseclass": "HBox"})
         self.hboxMain.style.update(
-            {"margin": "0px", "width": "100%", "height": "100%", "top": "9px", "left": "12px",
+            {"margin": "0px", "width": "100%", "height": "100%",
              "position": "absolute",
              "display": "flex", "justify-content": "space-around", "align-items": "center", "flex-direction": "row",
              "overflow": "auto"})
@@ -82,7 +93,7 @@ class WebApp(App):
             {"class": "VBox", "editor_constructor": "()", "editor_varname": "vboxMain", "editor_tag_type": "widget",
              "editor_newclass": "False", "editor_baseclass": "VBox"})
         self.vboxMain.style.update(
-            {"margin": "0px", "width": "882.0px", "height": "735.0px", "top": "86.0px", "position": "static",
+            {"margin": "0px", "width": "100%", "height": "100%", "position": "static",
              "display": "flex", "justify-content": "space-around", "align-items": "center", "flex-direction": "column",
              "overflow": "auto", "order": "-1", "left": "116.0px"})
 
@@ -95,8 +106,8 @@ class WebApp(App):
              "editor_baseclass": "Label"})
         self.lblTitle.style.update(
             {"margin": "0px", "width": "169.0px", "height": "42.0px", "top": "20px", "position": "static",
-             "overflow": "auto", "order": "-1", "font-size": "40px", "font-weight": "bolder",
-             "font-style": "normal"})
+             "order": "-1", "font-size": "40px", "font-weight": "bolder",
+             "font-style": "normal", "text-align": "center"})
 
         self.lblText = Label('Wenn du mitspielen möchtest drücke auf ')
         self.lblText.attributes.update(
@@ -104,8 +115,9 @@ class WebApp(App):
              "editor_varname": "lblText", "editor_tag_type": "widget", "editor_newclass": "False",
              "editor_baseclass": "Label"})
         self.lblText.style.update(
-            {"margin": "0px", "width": "260.0px", "height": "27.0px", "top": "380.0px", "position": "static",
-             "overflow": "auto", "order": "-1", "left": "382.0px"})
+            {"margin": "0px", "top": "380.0px", "position": "static",
+             "overflow": "auto", "order": "-1", "left": "382.0px",
+             "text-align": "center"})  # "width": "260.0px", "height": "27.0px",
 
         self.lblText2 = Label('Wenn du ein Spiel starten oder konfigurieren möchtest drücke auf ')
         self.lblText2.attributes.update({"class": "Label",
@@ -114,9 +126,12 @@ class WebApp(App):
                                          "editor_newclass": "False", "editor_baseclass": "Label"})
         self.lblText2.style.update(
             {"margin": "0px", "width": "217.0px", "height": "57.0px", "top": "20px", "position": "static",
-             "overflow": "auto", "order": "-1"})
+             "overflow": "auto", "order": "-1", "text-align": "center"})
 
         self.txtName = TextInput(single_line=True, hint='Name')
+        self.txtName.style.update(
+            {"margin": "0px", "width": "217.0px", "height": "57.0px", "top": "20px", "position": "static",
+             "overflow": "auto", "order": "-1", "text-align": "center"})
         self.txtName.onchange.do(self.txtName_on_change)
 
         self.ddScenario = DropDown()
@@ -157,7 +172,14 @@ class WebApp(App):
             {"margin": "0px", "width": "118.0px", "height": "38.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
         self.btConf.onclick.do(self.on_config_pressed)
-
+        self.btTutorial = Button('Tutorial')
+        self.btTutorial.attributes.update(
+            {"class": "Button", "editor_constructor": "('Konfigurieren')", "editor_varname": "btConf",
+             "editor_tag_type": "widget", "editor_newclass": "False", "editor_baseclass": "Button"})
+        self.btTutorial.style.update(
+            {"margin": "0px", "width": "118.0px", "height": "38.0px", "top": "20px", "position": "static",
+             "overflow": "auto", "order": "-1"})
+        self.btTutorial.onclick.do(self.on_tutorial_pressed)
         self.lblMadeBy = Label('made by Henry & Christopher with ❤️')
         self.lblMadeBy.attributes.update(
             {"class": "Label", "editor_constructor": "('made by Henry & Christopher with ❤️')",
@@ -168,9 +190,9 @@ class WebApp(App):
             {"margin": "0px", "width": "236.0px", "height": "264.0px", "top": "20px", "position": "static",
              "overflow": "auto", "order": "-1"})
 
-        self.imgPicture = Image('bild.png')
+        self.imgPicture = Image('../img/Nachbar.png')
         self.imgPicture.attributes.update(
-            {"class": "Image", "src": "bild.png", "editor_constructor": "('bild.png')", "editor_varname": "imgPicture",
+            {"class": "Image", "src": '../img/Nachbar.png', "editor_varname": "imgPicture",
              "editor_tag_type": "widget", "editor_newclass": "False", "editor_baseclass": "Image"})
         self.imgPicture.style.update(
             {"margin": "0px", "width": "100px", "height": "100px", "top": "20px", "position": "static",
@@ -185,10 +207,10 @@ class WebApp(App):
              "display": "table", "overflow": "auto", "order": "-1"})
 
         items = []
-        self.lvPoll = ListView.new_from_list(items, width=300, height=120, margin='10px')
+        self.lvPoll = ListView.new_from_list(items, width='75%', margin='10px')  # , height=120
         self.lvPoll.onselection.do(self.lvPoll_on_selected)
 
-        self.lvTutorial = ListView.new_from_list(items, width=300, height=120, margin='10px')
+        self.lvTutorial = ListView.new_from_list(items, width='75%', margin='10px')  # , height=120
         self.lvTutorial.onselection.do(self.lvTutorial_on_selected)
 
     def construct_config_ui(self):
@@ -199,7 +221,7 @@ class WebApp(App):
         self.vboxMain.append(self.lblText, 'lblText')
 
         self.vboxMain.append(self.ddScenario, 'ddScenario')
-
+        self.vboxMain.append(self.btTutorial, 'btTutorial')
         self.vboxMain.append(self.btStart, 'btStart')
 
         self.vboxMain.append(self.lblMadeBy, 'lblMadeBy')
@@ -274,7 +296,7 @@ class WebApp(App):
 
         self.vboxMain.append(self.lblText, 'lblText')
 
-        self.vboxMain.append(self.ddScenario, 'ddScenario')
+        # self.vboxMain.append(self.ddScenario, 'ddScenario')
 
         self.vboxMain.append(self.lvTutorial, 'lvTutorial')
 
@@ -285,7 +307,7 @@ class WebApp(App):
         return self.tutorial_ui
 
     def on_start_pressed(self, emitter):
-        print('Start!')
+        print('----Start pressed----')
         gamestatus_dict['scenario'] = self.ddScenario.get_value()
         gamestatus_dict['status'] = 1
 
@@ -293,7 +315,7 @@ class WebApp(App):
         print()
 
     def on_login_pressed(self, emitter):
-        print('LOGIN')  # TODO
+        print('----Login pressed----')
 
         instance_dict.update({self.ip: {'name': self.txtName.get_text(),
                                         'ui': {'base': 'login', 'btLogin': {'text': 'Anmelden', 'visibility': 'hidden'},
@@ -304,14 +326,13 @@ class WebApp(App):
         # print(instance_dict)
 
     def txtName_on_change(self, widget, value):
-        print(value)
         if value != '':
             self.btLogin.set_enabled(enabled=True)
         else:
             self.btLogin.set_enabled(enabled=False)
 
     def on_config_pressed(self, emitter):
-        print('CONFIG')
+        print('----Config pressed----')
         self.on_login_pressed(emitter)
         scenarios = import_scenario()
         scen_list = []
@@ -324,20 +345,30 @@ class WebApp(App):
                                               'ddScenario': {'list': scen_list}
                                               }})
 
+    def on_tutorial_pressed(self, emitter):
+        print('----Tutorial pressed----')
+        gamestatus_dict['status'] = 5
+        # print(gamestatus_dict)
+
+
     def lvPoll_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
             You can retrieve the item rapidly
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
-        print('POLL_Abstimmung')  # TODO
-        instance_dict[self.ip].update({'vote': selected_item_key})
+        if selected_item_key is not None:
+            print('POLL_Abstimmung')
+            instance_dict[self.ip].update({'vote': selected_item_key})
 
     def lvTutorial_on_selected(self, widget, selected_item_key):
         """ The selection event of the listView, returns a key of the clicked event.
             You can retrieve the item rapidly
         """
         # self.lbl.set_text('List selection: ' + self.listView.children[selected_item_key].get_text())
-        print('TUTORIAL_SELECTED')  # TODO
+        if selected_item_key is not None:
+            print('TUTORIAL_SELECTED')
+            gamestatus_dict['status'] = 4
+            gamestatus_dict.update({'tutorial': self.lvTutorial.children[selected_item_key].get_text()})
 
 
 class WebThread(Thread):
@@ -345,8 +376,8 @@ class WebThread(Thread):
         Thread.__init__(self)
 
     def run(self):
-        # Configuration
-        configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 80,
+        # Configuration #TODO multiple instances
+        configuration = {'config_project_name': 'Login', 'config_address': '0.0.0.0', 'config_port': 8080,
                          'config_multiple_instance': True, 'config_enable_file_cache': False,
                          'config_start_browser': False, 'config_resourcepath': './res/'}
 
