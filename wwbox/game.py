@@ -258,6 +258,9 @@ class Game:
             play_audio(args[0])
         if cammand == 'sp' or cammand == 'saveplayer':
             self.saved_player_id = args[0]
+        if cammand == 'ea' or cammand == 'executeaction':
+            #self.actions[args[0]].executeAction()
+            #TDOD
         if command == 'dk':
             self.direct_kill(args[0])
         if command == 'ae':
