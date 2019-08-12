@@ -18,6 +18,8 @@ class Game:
         self.roles = {}
         self.actions = {}
         self.order = {}
+        #declaring for saveplayer command
+        self.saved_player_id = 0 
 
     def new_player(self, name: str, id: str):
         """Adds a new player Object to Game"""
@@ -254,6 +256,8 @@ class Game:
         """'Switch-Case' for Action commands."""
         if command == 'ps' or command == 'playsound':
             play_audio(args[0])
+        if cammand == 'sp' or cammand == 'saveplayer':
+            self.saved_player_id = args[0]
         if command == 'dk':
             self.direct_kill(args[0])
         if command == 'ae':
