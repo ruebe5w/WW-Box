@@ -19,7 +19,7 @@ class Game:
         self.actions = {}
         self.order = {}
         #declaring for saveplayer command
-        self.saved_player_id = 0 
+        self.saved_players = 0 
 
     def new_player(self, name: str, id: str):
         """Adds a new player Object to Game"""
@@ -86,7 +86,7 @@ class Game:
         for player_id in send_player_id_array:
             send_poll(player_id, txt, poll_player_id_array)
             time.sleep(self.scenario.discussion_time)
-            return evaluate_voting()
+            return evaluate_voting()#TODO #Has to return a array
 
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
