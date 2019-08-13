@@ -4,11 +4,11 @@ from configparser import ConfigParser
 class Action:
     """Represents a Action"""
 
-    def __init__(self, id: int, conditions, commands,player_id):
+    def __init__(self, id: int, conditions, commands):
         self.id = id
         self.conditions = conditions  # dict
         self.commands = commands
-        self.player_id=player_id
+        self.self_players = [] # Array mit den Spielern die die Action executen
 
     def write_to_file(self):
         """Writes a Action to a Config-File"""
@@ -72,9 +72,9 @@ class Action:
             oo = playerKey["onlyone"]
 
         if getter == "self":
-            return self.player_id
+            return self.self_players
 		if getter == "saved":
-            return game.saved_player_id
+            return game.saved_players
         if getter == "poll":
             return game.get_player_by_poll(self.getPlayer(data["targets"]), self.getPlayer(data["players"]), self.getValue(data["txt"]))
         if getter == "effect":
@@ -103,6 +103,7 @@ class Action:
             attributes.append(self.getValue(v))
         game.command_switch(id, attributes)
 
-    def executeAction(self):
+    def executeAction(self,self_players):
+		self.self_players = self_players
         if self.testCondition(self.conditions):
             self.executeCommands(self.commands)
