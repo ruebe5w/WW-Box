@@ -163,7 +163,7 @@ class Game:
                 if player.status == 1:
                     for role_name in player.roles:
                         for action_name in self.roles[role_name].on_attack_actions:
-                            self.actions[action_name].run(player)
+                            self.actions[action_name].executeAction(player)
                     if player.status == 1:
                         # play_audio(self.scenario.audios['player_death'])
                         self.direct_kill(player.id)
@@ -259,7 +259,7 @@ class Game:
         if cammand == 'sp' or cammand == 'saveplayer':
             self.saved_player_id = args[0]
         if cammand == 'ea' or cammand == 'executeaction':
-            #self.actions[args[0]].executeAction()
+            #self.actions[args[0]].executeAction(args[1])
             #TDOD
         if command == 'dk':
             self.direct_kill(args[0])
