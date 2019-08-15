@@ -136,9 +136,7 @@ class Game:
 
         def day():
             """Execute Day things"""
-            play_audio(self.scenario.audios['town_awake'])
 
-            set_announce_deaths()
             # Diskussion
 
             for key in self.players.keys():  # TODO, Actions sind hier besser, bzw. send_poll
@@ -154,11 +152,11 @@ class Game:
             # Abstimmung auswerten
             self.players[evaluate_voting()].status = 1
 
-            set_announce_deaths()
+            check_deaths()
 
             play_audio(self.scenario.audios['town_sleep'])
 
-        def set_announce_deaths():
+        def check_deaths():
             """Triggers onAttack-Actions and triggers onDeath-Actions"""
             for player in self.players:
                 if player.status == 1:
@@ -175,15 +173,17 @@ class Game:
         """Start Gameroutine"""
         first_night = True
         # 0R (Bürgermeister)
-        play_audio(self.scenario.audios['town_sleep'])
-        night()
-        while not self._is_won():
-            day()
-            night()
-        set_announce_deaths()
 
-        # Gewinner verkünden
-        # Neustarten
+        while not self._is_won():
+            play_audio(self.scenario.audios['town_sleep'])
+            night()
+            play_audio(self.scenario.audios['town_awake'])
+            check_deaths()
+            day()
+            check_deaths()
+
+        # Gewinner verkünden #TODO Gewinner verkünden
+        # Neustarten #TODO Neustart
 
     def _is_won(self):
         """Check if a team has won, returns True if Game is won."""
