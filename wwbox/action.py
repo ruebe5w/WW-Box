@@ -1,5 +1,5 @@
 from configparser import ConfigParser
-#from wwbox.game import Game
+from wwbox.game import Game
 
 class Action:
     """Represents a Action"""
@@ -73,7 +73,7 @@ class Action:
 
         if getter == "self":
             return self.self_players
-		if getter == "saved":
+        if getter == "saved":
             return game.saved_players
         if getter == "poll":
             return game.get_player_by_poll(self.getPlayer(data["targets"]), self.getPlayer(data["players"]), self.getValue(data["txt"]))
@@ -104,6 +104,6 @@ class Action:
         game.command_switch(id, attributes)
 
     def executeAction(self,self_players):
-		self.self_players = self_players
+        self.self_players = self_players
         if self.testCondition(self.conditions):
             self.executeCommands(self.commands)

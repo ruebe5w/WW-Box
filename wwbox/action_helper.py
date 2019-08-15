@@ -94,7 +94,7 @@ def addeffect(players, effectname, evalue):
     return out
 
 
-def append_to_effect(player,efffectname,key,value):
+def append_to_effect(player,effectname,key,value):
     out = {}
     out["id"]="ate"
     out["attributes"]=[effectname,key,value]
@@ -102,7 +102,7 @@ def append_to_effect(player,efffectname,key,value):
 
 
 def executeaction(action_id,players):
-	out = {}
+    out = {}
     out["id"] = "executeaction"
     out["attributes"] = [value(action_id),players]
     return out
@@ -121,7 +121,7 @@ def sendinfo(player, txt, img=""):
     return out
 
 
-def condtion(v1, o, v2):
+def condition(v1, o, v2):
     return [value(v1), o, value(v2)]
 
 

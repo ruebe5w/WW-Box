@@ -256,10 +256,10 @@ class Game:
         """'Switch-Case' for Action commands."""
         if command == 'ps' or command == 'playsound':
             play_audio(args[0])
-        if cammand == 'sp' or cammand == 'saveplayer':
+        if command == 'sp' or command == 'saveplayer':
             self.saved_player_id = args[0]
-        if cammand == 'ea' or cammand == 'executeaction':
-            #self.actions[args[0]].executeAction(args[1])
+        if command == 'ea' or command == 'executeaction':
+            self.actions[args[0]].executeAction(args[1])
             #TDOD
         if command == 'dk':
             self.direct_kill(args[0])

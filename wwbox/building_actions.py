@@ -1,4 +1,4 @@
-import actionhelper
+from wwbox.action_helper import *
 
 #action: Role|Ngt/Atk/Dth
 
