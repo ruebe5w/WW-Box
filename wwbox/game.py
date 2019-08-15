@@ -207,7 +207,7 @@ class Game:
         player = self.players[player_id]
         for role_name in player.roles:
             for action_name in self.roles[role_name].death_actions:
-                self.actions[action_name].run(player)
+                self.actions[action_name].executeAction(player)
         player.status = 0
         player.can_speak = False
         player.can_vote = False
