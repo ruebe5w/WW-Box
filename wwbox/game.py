@@ -161,12 +161,11 @@ class Game:
             for player in self.players:
                 if player.status == 1:
                     for role_name in player.roles:
-                        for action_name in self.roles[role_name].on_attack_actions:
+                        for action_name in self.roles[role_name].on_attack_actions: #TODO Action Conventions eingehalten?
                             self.actions[action_name].executeAction(player)
                     if player.status == 1:
                         # play_audio(self.scenario.audios['player_death'])
                         self.direct_kill(player.id)
-
                     else:
                         player.status = 2
 
@@ -210,6 +209,8 @@ class Game:
             for action_name in self.roles[role_name].death_actions:
                 self.actions[action_name].executeAction(player)
         player.status = 0
+        #TODO Audio "ein Spieler ist gestorben"
+        #TODO Sende Todesinfo an alle Spieler
         player.can_speak = False
         player.can_vote = False
 
