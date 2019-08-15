@@ -18,8 +18,8 @@ class Game:
         self.roles = {}
         self.actions = {}
         self.order = {}
-        #declaring for saveplayer command
-        self.saved_players = 0 
+        # declaring for saveplayer command
+        self.saved_players = 0
 
     def new_player(self, name: str, id: str):
         """Adds a new player Object to Game"""
@@ -86,7 +86,7 @@ class Game:
         for player_id in send_player_id_array:
             send_poll(player_id, txt, poll_player_id_array)
             time.sleep(self.scenario.discussion_time)
-            return evaluate_voting()#TODO #Has to return a array
+            return evaluate_voting()  # TODO #Has to return a array
 
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
@@ -103,6 +103,22 @@ class Game:
     def import_roles(self):
         self.roles.update(import_roles())
 
+    def _is_won(self):
+        """Check if a team has won, returns True if Game is won."""
+        team_array = []
+        for player_key in self.players.keys():
+            if self.players[player_key].status > 0:
+                team_array.append(self.players[player_key].roles[0].team)
+        if len(team_array) == 1:
+            return True
+        else:
+            return False
+
+    def winner_is(self):
+        print('TODO')
+        # Gewinner verkünden #TODO Gewinner verkünden
+        # Neustarten #TODO Neustart
+
     def start(self, scenario_name):
         """Starts a Game"""
         print('Ein neues Spiel wird gestartet!')
@@ -112,14 +128,16 @@ class Game:
         self.scenario = scenarios[scenario_name]
         self._role_assignment()
         self.generate_order()
-        play_audio(self.scenario.audios['story_audio'])#TODO Audio Gedöns
+        play_audio(self.scenario.audios['story_audio'])  # TODO Audio Gedöns
         self.game_routine()
 
     def game_routine(self):
         """Starts the Game-Routine"""
+
         def night():
             """Execute Night things"""
-            nonlocal first_night
+            nonlocal
+            first_night
             if first_night:
                 print()
                 _night_wakeup(1)
@@ -131,8 +149,8 @@ class Game:
         def _night_wakeup(cat):
             """Wake up roles with passed category"""
             for role in self.order[cat]:
-                if self.get_players_by_role(role) != []:#only wakes role up if players of that role exist
-                    role.wake_up()#TODO make shure only the roles of alive players get waken up
+                if self.get_players_by_role(role) != []:  # only wakes role up if players of that role exist
+                    role.wake_up()  # TODO make shure only the roles of alive players get waken up
 
         def day():
             """Execute Day things"""
@@ -161,13 +179,18 @@ class Game:
             for player in self.players:
                 if player.status == 1:
                     for role_name in player.roles:
-                        for action_name in self.roles[role_name].on_attack_actions: #TODO Action Conventions eingehalten?
+                        for action_name in self.roles[
+                            role_name].on_attack_actions:  # TODO Action Conventions eingehalten?
                             self.actions[action_name].executeAction(player)
                     if player.status == 1:
                         # play_audio(self.scenario.audios['player_death'])
                         self.direct_kill(player.id)
                     else:
                         player.status = 2
+            if self._is_won():
+                self.winner_is()
+
+        # TODO
 
         """Start Gameroutine"""
         first_night = True
@@ -180,20 +203,7 @@ class Game:
             check_deaths()
             day()
             check_deaths()
-
-        # Gewinner verkünden #TODO Gewinner verkünden
-        # Neustarten #TODO Neustart
-
-    def _is_won(self):
-        """Check if a team has won, returns True if Game is won."""
-        team_array = []
-        for player_key in self.players.keys():
-            if self.players[player_key].status > 0:
-                team_array.append(self.players[player_key].roles[0].team)
-        if len(team_array) == 1:
-            return True
-        else:
-            return False
+        self.winner_is()
 
     def get_player_names(self):
         """Returns Array with all Player-Names in Game."""
@@ -209,8 +219,8 @@ class Game:
             for action_name in self.roles[role_name].death_actions:
                 self.actions[action_name].executeAction(player)
         player.status = 0
-        #TODO Audio "ein Spieler ist gestorben"
-        #TODO Sende Todesinfo an alle Spieler
+        # TODO Audio "ein Spieler ist gestorben"
+        # TODO Sende Todesinfo an alle Spieler
         player.can_speak = False
         player.can_vote = False
 
@@ -262,7 +272,7 @@ class Game:
             self.saved_player_id = args[0]
         if command == 'ea' or command == 'executeaction':
             self.actions[args[0]].executeAction(args[1])
-            #TDOD
+            # TDOD
         if command == 'dk':
             self.direct_kill(args[0])
         if command == 'ae':
