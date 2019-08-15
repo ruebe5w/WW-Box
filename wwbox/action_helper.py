@@ -94,18 +94,17 @@ def addeffect(players, effectname, evalue):
     return out
 
 
-'''
-def append_to_effect(player,efffectname,evlaue):
+def append_to_effect(player,efffectname,key,value):
     out = {}
-    out["id"]="playsound"
-    out["attributes"]=[value(location)]
+    out["id"]="ate"
+    out["attributes"]=[effectname,key,value]
     return out
-'''
 
-def executeaction(action_id):
+
+def executeaction(action_id,players):
 	out = {}
     out["id"] = "executeaction"
-    out["attributes"] = [value(action_id)]
+    out["attributes"] = [value(action_id),players]
     return out
 
 def removeeffect(player, effectname):

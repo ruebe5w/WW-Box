@@ -1,0 +1,36 @@
+//TODO 
+
+Werden actions von Rollen nur ausgeführt wenn jemand mit der Rolle vorhanden ist? - Sollte so sein
+
+add player by all
+
+add player getter modifier "not"
+
+poll option ability to chose no-one (add selection anz bereich)
+
+make self_players in executeaction optional in call or automatic in helper
+
+dth classic ausführen wenn bei allen rolles 0 ist
+? or ?
+classics max 1 mal pro call ausführen
+-> Classic Atk einmal nach specials
+
+make actions in roles to single id not array
+
+kill message in direct_kill
+
+add to all player type input shortcut for things like "self"
+
+has überprüfen
+
+condition for checking if dict effect is all false or all true
+
+add setstatus effect
+
+lösung für reset mit chistopher diskutieren
+-> Reset Action ist besser, einfacher und sauberer
+
+---not important for the momentary actions---
+
+add possibility to select multiple people
+
