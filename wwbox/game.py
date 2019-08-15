@@ -18,6 +18,8 @@ class Game:
         self.roles = {}
         self.actions = {}
         self.order = {}
+        #declaring for saveplayer command
+        self.saved_players = 0 
 
     def new_player(self, name: str, id: str):
         """Adds a new player Object to Game"""
@@ -84,7 +86,7 @@ class Game:
         for player_id in send_player_id_array:
             send_poll(player_id, txt, poll_player_id_array)
             time.sleep(self.scenario.discussion_time)
-            return evaluate_voting()
+            return evaluate_voting()#TODO #Has to return a array
 
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
@@ -129,7 +131,8 @@ class Game:
         def _night_wakeup(cat):
             """Wake up roles with passed category"""
             for role in self.order[cat]:
-                role.wake_up()
+                if self.get_players_by_role(role) != []:#only wakes role up if players of that role exist
+                    role.wake_up()#TODO make shure only the roles of alive players get waken up
 
         def day():
             """Execute Day things"""
@@ -161,7 +164,7 @@ class Game:
                 if player.status == 1:
                     for role_name in player.roles:
                         for action_name in self.roles[role_name].on_attack_actions:
-                            self.actions[action_name].run(player)
+                            self.actions[action_name].executeAction(player)
                     if player.status == 1:
                         # play_audio(self.scenario.audios['player_death'])
                         self.direct_kill(player.id)
@@ -202,10 +205,10 @@ class Game:
 
     def direct_kill(self, player_id):
         """Kills a player and trigger his deathActions."""
-        player = self.roles[player_id]
+        player = self.players[player_id]
         for role_name in player.roles:
             for action_name in self.roles[role_name].death_actions:
-                self.actions[action_name].run(player)
+                self.actions[action_name].executeAction(player)
         player.status = 0
         player.can_speak = False
         player.can_vote = False
@@ -254,6 +257,11 @@ class Game:
         """'Switch-Case' for Action commands."""
         if command == 'ps' or command == 'playsound':
             play_audio(args[0])
+        if command == 'sp' or command == 'saveplayer':
+            self.saved_player_id = args[0]
+        if command == 'ea' or command == 'executeaction':
+            self.actions[args[0]].executeAction(args[1])
+            #TDOD
         if command == 'dk':
             self.direct_kill(args[0])
         if command == 'ae':
