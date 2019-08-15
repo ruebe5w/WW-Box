@@ -38,7 +38,7 @@ def pd(targets, txt, players):
 def player(getter, data=None, oo=False):
     out = {}
     out["onlyone"] = oo
-    if getter == "self" or getter == "saved":
+    if getter == "self" or getter == "saved" or getter == "all":
         out["getter"] = getter
 	
     elif getter == "role" or getter == "team" or getter == "status" or getter == "poll":

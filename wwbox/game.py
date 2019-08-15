@@ -131,7 +131,8 @@ class Game:
         def _night_wakeup(cat):
             """Wake up roles with passed category"""
             for role in self.order[cat]:
-                role.wake_up()
+                if self.get_players_by_role(role) != []:#only wakes role up if players of that role exist
+                    role.wake_up()#TODO make shure only the roles of alive players get waken up
 
         def day():
             """Execute Day things"""

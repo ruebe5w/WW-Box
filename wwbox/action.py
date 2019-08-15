@@ -75,6 +75,8 @@ class Action:
             return self.self_players
         if getter == "saved":
             return game.saved_players
+        if getter == "all":
+            return range(0,len(game.players))
         if getter == "poll":
             return game.get_player_by_poll(self.getPlayer(data["targets"]), self.getPlayer(data["players"]), self.getValue(data["txt"]))
         if getter == "effect":
