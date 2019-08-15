@@ -54,3 +54,6 @@ class Role:
         """Triggers the Night-Actions of the Role."""
         print()
         # TODO role wake_up
+        #Audio aufwachen
+        #Trigger Night-Actions
+        #Audio einschlafen
