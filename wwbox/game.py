@@ -204,7 +204,7 @@ class Game:
 
     def direct_kill(self, player_id):
         """Kills a player and trigger his deathActions."""
-        player = self.roles[player_id]
+        player = self.players[player_id]
         for role_name in player.roles:
             for action_name in self.roles[role_name].death_actions:
                 self.actions[action_name].run(player)
