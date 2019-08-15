@@ -8,7 +8,7 @@ web_thread.start()
 old_instance_dict = {}
 
 game = Game()
-
+#TODO import Actions
 while True:
     if gamestatus_dict['status'] != 1:
         if old_instance_dict != instance_dict:
