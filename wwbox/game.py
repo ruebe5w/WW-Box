@@ -112,7 +112,7 @@ class Game:
         self.scenario = scenarios[scenario_name]
         self._role_assignment()
         self.generate_order()
-        play_audio(self.scenario.audios['story_audio'])
+        play_audio(self.scenario.audios['story_audio'])#TODO Audio Gedöns
         self.game_routine()
 
     def game_routine(self):
