@@ -29,9 +29,9 @@ def value(in_data):
 # poll data
 def pd(targets, txt, players):
     out = {}
-    out["targets"] = targets
+    out["targets"] = fast_player(targets)
     out["txt"] = txt
-    out["players"] = players
+    out["players"] = fast_player(players)
     return out
 
 
@@ -40,7 +40,7 @@ def player(getter, data=None, oo=False):
     out["onlyone"] = oo
     if getter == "self" or getter == "saved" or getter == "all":
         out["getter"] = getter
-	
+
     elif getter == "role" or getter == "team" or getter == "status" or getter == "poll":
         out["getter"] = getter
         out["data"] = data
@@ -62,7 +62,7 @@ def player(getter, data=None, oo=False):
 
 def effect(player, effectname):
     out = {}
-    out["player"] = player
+    out["player"] = fast_player(player)
     out["effectname"] = effectname
     return out
 
@@ -76,28 +76,28 @@ def playsound(location):
 def saveplayer(player):
     out = {}
     out["id"] = "saveplayer"
-    out["attributes"] = [value(player)]
+    out["attributes"] = [value(fast_player(player))]
     return out
 
 
 def directkill(player):
     out = {}
     out["id"] = "dk"
-    out["attributes"] = [value(player)]
+    out["attributes"] = [value(fast_player(player))]
     return out
 
 
 def addeffect(players, effectname, evalue):
     out = {}
     out["id"] = "ae"
-    out["attributes"] = [value(players), value(effectname), value(evalue)]
+    out["attributes"] = [value(fast_player(players)), value(effectname), value(evalue)]
     return out
 
 
 def append_to_effect(player,effectname,key,value):
     out = {}
     out["id"]="ate"
-    out["attributes"]=[effectname,key,value]
+    out["attributes"]=[fast_player(player),effectname,key,value]
     return out
 
 
@@ -110,14 +110,14 @@ def executeaction(action_id,players):
 def removeeffect(player, effectname):
     out = {}
     out["id"] = "rme"
-    out["attributes"] = [value(player), value(effectname)]
+    out["attributes"] = [value(fast_player(player)), value(effectname)]
     return out
 
 
 def sendinfo(player, txt, img=""):
     out = {}
     out["id"] = "si"
-    out["attributes"] = [value(player), value(txt), value(img)]
+    out["attributes"] = [value(fast_player(player)), value(txt), value(img)]
     return out
 
 
@@ -131,8 +131,12 @@ def action(conditions, commands):
     out["commands"] = commands
     return out
 
-
-
+def fast_player(player):
+    if type(player) == type({}):
+        return player
+    else:
+        out = {}
+        out["getter"] = getter
 
 
 
