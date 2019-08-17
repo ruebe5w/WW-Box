@@ -101,10 +101,10 @@ def append_to_effect(player,effectname,key,value):
     return out
 
 
-def executeaction(action_id,players):
+def executeaction(action_id,players="self"):
     out = {}
     out["id"] = "executeaction"
-    out["attributes"] = [value(action_id),players]
+    out["attributes"] = [value(action_id),fast_player(players)]
     return out
 
 def removeeffect(player, effectname):
