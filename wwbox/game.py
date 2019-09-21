@@ -19,7 +19,7 @@ class Game:
         self.actions = {}
         self.order = {}
         # declaring for saveplayer command
-        self.saved_players = 0
+        self.saved_players = []
 
     def new_player(self, name: str, id: str):
         """Adds a new player Object to Game"""
@@ -86,7 +86,7 @@ class Game:
         for player_id in send_player_id_array:
             send_poll(player_id, txt, poll_player_id_array)
             time.sleep(self.scenario.discussion_time)
-            return evaluate_voting()  # TODO #Has to return a array
+            return evaluate_voting()  # TODO #Has to return an array
 
     def add_role(self, name: str, gender: str, toa: int, team: str, night_actions, day_actions, on_attack_actions,
                  death_actions,
@@ -168,11 +168,8 @@ class Game:
             play_audio(self.scenario.audios['discuss_end'])
 
             # Abstimmung auswerten
-            self.players[evaluate_voting()].status = 1
+            self.players[evaluate_voting()].status = 1 #TODO das geht so nicht
 
-            check_deaths()
-
-            play_audio(self.scenario.audios['town_sleep'])
 
         def check_deaths():
             """Triggers onAttack-Actions and triggers onDeath-Actions"""
@@ -190,7 +187,7 @@ class Game:
             if self._is_won():
                 self.winner_is()
 
-        # TODO
+        
 
         """Start Gameroutine"""
         first_night = True
