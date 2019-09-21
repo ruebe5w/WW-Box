@@ -44,7 +44,7 @@ def import_roles():
         toa = role_file['GENERAL']['toa']
         img = role_file['GENERAL']['img']
         team = role_file['GENERAL']['team']
-        scenario = role_file['GENARAL']['scenario']
+        scenario = role_file['GENERAL']['scenario']
 
         actions = import_actions()
         night_actions = import_dict(night_acts, actions, 'Action')
