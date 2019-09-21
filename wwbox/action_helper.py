@@ -137,6 +137,7 @@ def fast_player(player):
     else:
         out = {}
         out["getter"] = getter
+        return out
 
 
 
